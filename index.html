@@ -6,157 +6,94 @@
 <title>Capelle Caddie ⛳</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#f5f0e8;font-family:'DM Sans',Georgia,sans-serif;color:#1a1a1a;max-width:440px;margin:0 auto;min-height:100vh}
 button{cursor:pointer;font-family:'DM Sans',Georgia,sans-serif;-webkit-tap-highlight-color:transparent}
 input{font-family:'DM Sans',Georgia,sans-serif}
 .screen{display:none}.screen.on{display:block}
 
-/* ── LIVE HEADER ── */
-.live-bar{
-  background:#1a4a1a;
-  padding:10px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:sticky;top:0;z-index:100;
-}
-.live-logo{font-family:'Playfair Display',serif;color:#e8d080;font-size:15px;letter-spacing:.5px}
+/* ── LIVE BAR ── */
+.live-bar{background:#1a4a1a;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.live-logo{font-family:'Playfair Display',serif;color:#e8d080;font-size:15px}
 .live-right{display:flex;align-items:center;gap:8px}
-.live-pill{
-  background:rgba(232,208,128,.15);
-  border:1px solid rgba(232,208,128,.25);
-  border-radius:20px;
-  padding:4px 10px;
-  display:flex;align-items:center;gap:5px;
-}
+.live-pill{background:rgba(232,208,128,.15);border:1px solid rgba(232,208,128,.25);border-radius:20px;padding:4px 10px;display:flex;align-items:center;gap:5px}
 .live-dot{width:6px;height:6px;background:#5dba2a;border-radius:50%}
 .live-text{font-size:11px;color:#e8d080;font-weight:600;letter-spacing:.5px}
-.live-score{font-size:13px;font-weight:700}
 
 /* ── TABS ── */
-.tabs{
-  background:#fff;
-  border-bottom:2px solid #e8e0d0;
-  display:flex;
-  position:sticky;top:44px;z-index:99;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
-.tab{
-  flex:1;padding:12px 4px;background:transparent;border:none;
-  color:#a0906a;font-size:10px;letter-spacing:.5px;text-transform:uppercase;
-  font-weight:600;border-bottom:3px solid transparent;
-  transition:all .2s;
-}
+.tabs{background:#fff;border-bottom:2px solid #e8e0d0;display:flex;position:sticky;top:44px;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tab{flex:1;padding:11px 2px;background:transparent;border:none;color:#a0906a;font-size:9px;letter-spacing:.5px;text-transform:uppercase;font-weight:600;border-bottom:3px solid transparent;transition:all .2s}
 .tab.on{color:#1a4a1a;border-bottom-color:#1a4a1a}
 
-/* ── SETUP SCHERM ── */
-.setup-hero{
-  background:linear-gradient(160deg,#1a4a1a 0%,#2a6a2a 100%);
-  padding:30px 20px 24px;
-  text-align:center;
-}
+/* ── SETUP ── */
+.setup-hero{background:linear-gradient(160deg,#1a4a1a,#2a6a2a);padding:30px 20px 24px;text-align:center}
 .setup-hero h1{font-family:'Playfair Display',serif;font-size:26px;color:#e8d080;margin-bottom:4px}
 .setup-hero p{font-size:12px;color:rgba(255,255,255,.5);font-style:italic}
-
+.setup-steps{display:flex;justify-content:center;gap:6px;margin-top:14px}
+.setup-step{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}
+.setup-step.on{background:#e8d080}
 .setup-card{background:#fff;border-radius:16px;margin:12px 14px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.setup-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#8a7a5a;font-weight:700;margin-bottom:12px}
+.setup-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#8a7a5a;font-weight:700;margin-bottom:10px}
+.setup-sub{font-size:11px;color:#8a7a5a;margin-bottom:12px;line-height:1.5;font-style:italic}
+.setup-next{display:block;width:calc(100% - 28px);margin:8px 14px;padding:16px;background:#1a4a1a;color:#e8d080;border:none;border-radius:14px;font-size:16px;font-weight:700;letter-spacing:.5px;box-shadow:0 8px 24px rgba(26,74,26,.3)}
+.setup-back{display:block;width:calc(100% - 28px);margin:0 14px 20px;padding:12px;background:transparent;color:#8a7a5a;border:1px solid #e0d8c8;border-radius:14px;font-size:14px;font-weight:600}
 
-.doel-grid{display:flex;gap:8px}
-.doel-btn{
-  flex:1;padding:12px 8px;border-radius:12px;border:2px solid #e8e0d0;
-  background:#faf7f0;text-align:center;cursor:pointer;transition:all .2s;
-}
-.doel-btn.on{border-color:#1a4a1a;background:#f0f7f0}
-.doel-icon{font-size:22px;margin-bottom:4px}
-.doel-name{font-size:11px;font-weight:700;color:#1a1a1a}
-.doel-sub{font-size:9px;color:#8a7a5a;margin-top:2px}
+/* ── SPEELSTIJL ── */
+.stijl-grid{display:flex;flex-direction:column;gap:8px}
+.stijl-btn{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:2px solid #e8e0d0;background:#faf7f0;cursor:pointer;transition:all .2s}
+.stijl-btn.on{border-color:#1a4a1a;background:#f0f7f0}
+.stijl-icon{font-size:26px;flex-shrink:0}
+.stijl-info{flex:1}
+.stijl-name{font-size:14px;font-weight:700;color:#1a1a1a}
+.stijl-desc{font-size:11px;color:#8a7a5a;margin-top:2px;line-height:1.4}
 
+/* ── TEE / HCP ── */
 .tee-grid{display:flex;gap:8px}
-.tee-btn{
-  flex:1;padding:10px 8px;border-radius:10px;border:2px solid #e8e0d0;
-  background:#faf7f0;font-size:13px;font-weight:700;transition:all .2s;color:#8a7a5a;
-}
-.tee-btn.on{color:#fff}
-
+.tee-btn{flex:1;padding:12px 6px;border-radius:10px;border:2px solid #e8e0d0;background:#faf7f0;font-size:13px;font-weight:700;color:#8a7a5a;transition:all .2s}
 .hcp-row{display:flex;align-items:center;gap:12px}
-.hcp-btn{
-  width:38px;height:38px;border-radius:50%;
-  background:#f0f7f0;border:2px solid #c8e0c8;
-  color:#1a4a1a;font-size:20px;font-weight:bold;
-  display:flex;align-items:center;justify-content:center;
-}
-.hcp-inp{
-  width:70px;border:2px solid #e8e0d0;border-radius:10px;
-  font-size:18px;padding:6px 10px;text-align:center;
-  background:#faf7f0;color:#1a1a1a;
-}
+.hcp-btn{width:38px;height:38px;border-radius:50%;background:#f0f7f0;border:2px solid #c8e0c8;color:#1a4a1a;font-size:20px;font-weight:bold;display:flex;align-items:center;justify-content:center}
+.hcp-inp{width:70px;border:2px solid #e8e0d0;border-radius:10px;font-size:18px;padding:6px 10px;text-align:center;background:#faf7f0;color:#1a1a1a}
 
+/* ── CLUBS ── */
 .club-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f0ead8}
 .club-name{font-size:13px;font-weight:600;color:#1a1a1a;width:72px}
-.club-dist{font-size:14px;font-weight:700;color:#1a4a1a}
-.club-edit-btn{
-  background:#f0f7f0;border:1px solid #c8e0c8;color:#1a4a1a;
-  border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600;
-}
+.club-dist-val{font-size:14px;font-weight:700;color:#1a4a1a}
+.club-edit-btn{background:#f0f7f0;border:1px solid #c8e0c8;color:#1a4a1a;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600}
 .club-inp{width:64px;border:2px solid #1a4a1a;border-radius:8px;font-size:14px;padding:5px 8px;text-align:center;background:#f0f7f0}
 .club-ok{background:#1a4a1a;border:none;color:#e8d080;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700}
 .club-x{background:#faf7f0;border:1px solid #e8e0d0;color:#8a7a5a;border-radius:8px;padding:5px 8px;font-size:12px}
+.fav-check{width:22px;height:22px;border-radius:6px;border:2px solid #e8e0d0;background:#faf7f0;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;cursor:pointer;transition:all .2s}
+.fav-check.on{background:#1a4a1a;border-color:#1a4a1a;color:#e8d080}
+.fav-count{font-size:11px;color:#8a7a5a;text-align:center;margin-top:8px}
+.fav-count b{color:#1a4a1a}
 
-.start-btn{
-  display:block;width:calc(100% - 28px);margin:16px 14px 24px;
-  padding:18px;background:#1a4a1a;color:#e8d080;border:none;border-radius:16px;
-  font-size:17px;font-weight:700;letter-spacing:.5px;
-  box-shadow:0 8px 24px rgba(26,74,26,.3);
-}
+/* ── DOELSTELLING ── */
+.doel-grid{display:flex;gap:8px}
+.doel-btn{flex:1;padding:10px 6px;border-radius:12px;border:2px solid #e8e0d0;background:#faf7f0;text-align:center;cursor:pointer;transition:all .2s}
+.doel-btn.on{border-color:#1a4a1a;background:#f0f7f0}
+.doel-icon{font-size:20px;margin-bottom:4px}
+.doel-name{font-size:10px;font-weight:700;color:#1a1a1a}
 
-/* ── HOLE TAB ── */
-.hole-hero{
-  background:linear-gradient(160deg,#1a4a1a 0%,#2a6a2a 100%);
-  padding:16px 20px 18px;
-  position:relative;overflow:hidden;
-}
-.hole-hero-num{
-  font-family:'Playfair Display',serif;
-  font-size:90px;color:rgba(255,255,255,.06);
-  position:absolute;right:10px;top:-10px;line-height:1;font-weight:900;
-}
-.hole-nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.hole-nav-btn{
-  width:38px;height:38px;border-radius:50%;
-  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
-  color:#fff;font-size:20px;font-weight:bold;
-  display:flex;align-items:center;justify-content:center;
-}
+/* ── HOLE HERO ── */
+.hole-hero{background:linear-gradient(160deg,#1a4a1a,#2a6a2a);padding:14px 20px 16px;position:relative;overflow:hidden}
+.hole-hero-bg{font-family:'Playfair Display',serif;font-size:90px;color:rgba(255,255,255,.06);position:absolute;right:10px;top:-10px;line-height:1;font-weight:900}
+.hole-nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hole-nav-btn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:22px;font-weight:bold;display:flex;align-items:center;justify-content:center}
 .hole-nav-btn:disabled{opacity:.2}
 .hole-center{text-align:center}
-.hole-nr-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.5)}
+.hole-nr-lbl{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.5)}
 .hole-nr{font-family:'Playfair Display',serif;font-size:36px;color:#fff;font-weight:700;line-height:1}
-.hole-doel{font-size:11px;font-weight:600;margin-top:2px}
-
 .hole-dist-row{display:flex;align-items:flex-end;gap:4px;margin-bottom:4px}
 .hole-dist-big{font-family:'Playfair Display',serif;font-size:52px;color:#e8d080;line-height:1;font-weight:700}
 .hole-dist-unit{font-size:14px;color:rgba(232,208,128,.6);margin-bottom:10px}
 .hole-chips{display:flex;gap:6px;flex-wrap:wrap}
-.hole-chip{
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
-  border-radius:20px;padding:4px 10px;font-size:11px;color:rgba(255,255,255,.7);
-}
+.hole-chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 10px;font-size:11px;color:rgba(255,255,255,.7)}
 .hole-chip b{color:#e8d080}
 .hole-chip.warn{background:rgba(224,82,82,.15);border-color:rgba(224,82,82,.3);color:#f7a35c}
 
-.dots-bar{
-  background:#fff;border-bottom:1px solid #e8e0d0;
-  display:flex;gap:3px;flex-wrap:wrap;justify-content:center;padding:8px 12px;
-}
-.dot{
-  width:20px;height:20px;border-radius:50%;
-  border:1px solid #e8e0d0;background:#faf7f0;
-  color:#b0a080;font-size:8px;font-weight:600;
-  display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
-  transition:all .15s;
-}
+/* ── DOTS ── */
+.dots-bar{background:#fff;border-bottom:1px solid #e8e0d0;display:flex;gap:3px;flex-wrap:wrap;justify-content:center;padding:7px 12px}
+.dot{width:20px;height:20px;border-radius:50%;border:1px solid #e8e0d0;background:#faf7f0;color:#b0a080;font-size:8px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
 .dot.on{border-color:#1a4a1a;background:#1a4a1a;color:#e8d080}
 .dot.done{border-color:#c8e0c8;background:#f0f7f0;color:#2a6a2a}
 .dot.over{border-color:#f7c8a8;background:#fff7f0;color:#c04a0a}
@@ -167,71 +104,49 @@ input{font-family:'DM Sans',Georgia,sans-serif}
 .card-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
 .card-toggle-icon{font-size:11px;color:#b0a080}
 
-/* ── CADDIE OPTIES ── */
-.caddie-situation{
-  background:#f0f7f0;border:1px solid #c8e0c8;border-radius:10px;
-  padding:10px 12px;margin-bottom:12px;
-  font-size:12px;color:#1a4a1a;line-height:1.5;
-}
-.caddie-situation b{font-weight:700}
+/* ── CADDIE TAB ── */
+.caddie-header-card{background:#fff;margin:10px 12px 0;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.caddie-top{background:#1a4a1a;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.caddie-avatar{width:40px;height:40px;border-radius:50%;background:#e8d080;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.caddie-name-txt{font-size:12px;font-weight:700;color:#e8d080;letter-spacing:.5px}
+.caddie-role-txt{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-top:1px}
+.speech-wrap{padding:12px 14px 14px}
+.speech-bubble{background:#f5f0e8;border-radius:0 14px 14px 14px;padding:12px 14px;border:1px solid #e8e0d0;position:relative}
+.speech-bubble::before{content:'';position:absolute;top:-8px;left:14px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #e8e0d0}
+.speech-bubble::after{content:'';position:absolute;top:-6px;left:15px;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:7px solid #f5f0e8}
+.speech-text{font-size:13px;color:#2a2a2a;line-height:1.65;font-style:italic}
+.speech-text b{font-style:normal;color:#1a4a1a;font-weight:700}
 
-.club-opt{
-  display:flex;align-items:center;gap:12px;
-  padding:11px 14px;border-radius:12px;border:2px solid #e8e0d0;
-  background:#faf7f0;margin-bottom:8px;cursor:pointer;transition:all .2s;
-}
-.club-opt.selected{border-color:#1a4a1a;background:#f0f7f0}
-.club-opt.agressief{border-color:#f0c8a0;background:#fff8f0}
-.club-opt-icon{font-size:22px;flex-shrink:0}
-.club-opt-info{flex:1}
-.club-opt-name{font-size:15px;font-weight:700;color:#1a1a1a}
-.club-opt-detail{font-size:11px;color:#8a7a5a;margin-top:2px;line-height:1.4}
-.club-opt-tag{
-  font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  padding:3px 8px;border-radius:8px;white-space:nowrap;
-}
-.tag-veilig{background:#e8f5e8;color:#2a6a2a}
-.tag-slim{background:#1a4a1a;color:#e8d080}
-.tag-agressief{background:#fff0e0;color:#8a4a0a}
+/* ── LANDING ZONE MAP ── */
+.map-card{background:#fff;margin:8px 12px 0;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.map-header{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0ead8}
+.map-title{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#8a7a5a;font-weight:700}
+.map-slag-tabs{display:flex;gap:4px}
+.map-tab{width:24px;height:24px;border-radius:50%;background:#f5f0e8;border:1px solid #e0d8c8;font-size:10px;font-weight:700;color:#8a7a5a;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.map-tab.on{background:#1a4a1a;color:#e8d080;border-color:#1a4a1a}
+.map-body{padding:10px 14px}
 
-/* Plan slagen */
-.slag-item{
-  display:flex;align-items:flex-start;gap:10px;
-  padding:10px 0;border-bottom:1px solid #f0ead8;
-}
-.slag-item:last-child{border-bottom:none}
-.slag-num{
-  width:24px;height:24px;border-radius:50%;
-  background:#1a4a1a;color:#e8d080;
-  font-size:11px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  margin-top:1px;
-}
-.slag-body{flex:1}
-.slag-header{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+/* ── SLAG CARDS ── */
+.slag-card{background:#fff;border-radius:14px;margin:8px 12px 0;box-shadow:0 2px 8px rgba(0,0,0,.05);border:2px solid #f0ead8;overflow:hidden;transition:all .2s}
+.slag-card.active{border-color:#1a4a1a}
+.slag-card-header{padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.slag-num{width:26px;height:26px;border-radius:50%;background:#1a4a1a;color:#e8d080;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.slag-num.putt{background:#3ddc84;color:#0a2a0a}
+.slag-body-info{flex:1}
 .slag-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#8a7a5a;font-weight:600}
-.slag-club{font-size:15px;font-weight:700;color:#1a4a1a}
-.slag-dist{font-size:12px;color:#1a1a1a;font-weight:500}
-.slag-rest{font-size:11px;color:#8a7a5a;margin-top:2px}
-.slag-tip{font-size:11px;color:#5a8a5a;margin-top:3px;font-style:italic}
+.slag-club-name{font-size:16px;font-weight:700;color:#1a4a1a}
+.slag-dist-info{font-size:11px;color:#5a7a5a;margin-top:1px}
+.slag-tip-txt{padding:0 14px 11px 50px;font-size:11px;color:#6a7a6a;font-style:italic;line-height:1.5}
 
-.risico-item{
-  display:flex;align-items:flex-start;gap:8px;
-  font-size:12px;color:#8a4a0a;margin-top:6px;line-height:1.4;
-}
+/* ── RISICO ── */
+.risico-card{background:#fff8f0;border:1px solid #f0d8b0;border-radius:12px;margin:8px 12px 0;padding:10px 14px}
+.risico-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#8a4a0a;line-height:1.5;margin-bottom:5px}
+.risico-item:last-child{margin-bottom:0}
 
-/* ── SCORE ── */
-.score-card{
-  background:#1a4a1a;border-radius:16px;margin:10px 12px;padding:16px;
-  box-shadow:0 4px 16px rgba(26,74,26,.2);
-}
+/* ── SCORE CARD ── */
+.score-card{background:#1a4a1a;border-radius:16px;margin:10px 12px;padding:16px;box-shadow:0 4px 16px rgba(26,74,26,.2)}
 .score-row{display:flex;align-items:center;justify-content:space-between}
-.score-btn{
-  width:50px;height:50px;border-radius:50%;
-  background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);
-  color:#e8d080;font-size:26px;font-weight:bold;
-  display:flex;align-items:center;justify-content:center;
-}
+.score-btn{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);color:#e8d080;font-size:26px;font-weight:bold;display:flex;align-items:center;justify-content:center}
 .score-mid{text-align:center}
 .score-val{font-family:'Playfair Display',serif;font-size:54px;color:#fff;line-height:1;font-weight:700}
 .score-lbl{font-size:13px;font-weight:700;margin-top:2px}
@@ -239,55 +154,28 @@ input{font-family:'DM Sans',Georgia,sans-serif}
 
 /* ── STATS ── */
 .stat-btns{display:flex;gap:6px}
-.stat-btn{
-  flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid #e8e0d0;
-  background:#faf7f0;font-size:10px;font-weight:600;color:#8a7a5a;text-align:center;
-  transition:all .15s;
-}
+.stat-btn{flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid #e8e0d0;background:#faf7f0;font-size:10px;font-weight:600;color:#8a7a5a;text-align:center;transition:all .15s}
 .stat-btn.hit{border-color:#1a4a1a;background:#f0f7f0;color:#1a4a1a}
 .stat-btn.miss{border-color:#e05252;background:#fff5f5;color:#c03030}
 .putts-row{display:flex;align-items:center;gap:12px}
-.putt-btn{
-  width:34px;height:34px;border-radius:50%;
-  background:#f0f7f0;border:2px solid #c8e0c8;
-  color:#1a4a1a;font-size:18px;font-weight:bold;
-  display:flex;align-items:center;justify-content:center;
-}
+.putt-btn{width:34px;height:34px;border-radius:50%;background:#f0f7f0;border:2px solid #c8e0c8;color:#1a4a1a;font-size:18px;font-weight:bold;display:flex;align-items:center;justify-content:center}
 .putts-val{font-size:24px;font-weight:700;color:#1a4a1a;min-width:32px;text-align:center}
 
-.lopend{
-  background:#fff;border-radius:12px;margin:6px 12px;padding:10px 14px;
-  display:flex;align-items:center;justify-content:space-between;
-  box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-.lopend-lbl{font-size:11px;color:#8a7a5a}
-.lopend-val{font-size:15px;font-weight:700}
+/* ── LOPEND ── */
+.lopend{background:#fff;border-radius:12px;margin:6px 12px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.next-btn{display:block;width:calc(100% - 24px);margin:8px 12px 20px;padding:14px;background:#fff;color:#1a4a1a;border:2px solid #1a4a1a;border-radius:12px;font-size:14px;font-weight:700;letter-spacing:.5px;text-align:center}
 
-.next-btn{
-  display:block;width:calc(100% - 24px);margin:8px 12px 20px;
-  padding:14px;background:#fff;color:#1a4a1a;
-  border:2px solid #1a4a1a;border-radius:12px;
-  font-size:14px;font-weight:700;letter-spacing:.5px;text-align:center;
-}
-
-/* ── WIND TAB ── */
+/* ── WIND ── */
 .wind-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.wind-btn{
-  padding:10px 8px;border-radius:10px;border:1.5px solid #e8e0d0;
-  background:#faf7f0;font-size:11px;font-weight:600;color:#8a7a5a;
-  text-align:center;transition:all .15s;
-}
+.wind-btn{padding:10px 8px;border-radius:10px;border:1.5px solid #e8e0d0;background:#faf7f0;font-size:11px;font-weight:600;color:#8a7a5a;text-align:center;transition:all .15s}
 .wind-btn.on{border-color:#1a4a1a;background:#f0f7f0;color:#1a4a1a}
 .wind-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f0ead8;font-size:12px}
 
-/* ── KAART TAB ── */
+/* ── KAART ── */
 .sumbar{display:flex;gap:8px;margin:12px}
 .sumbox{flex:1;background:#fff;border-radius:12px;padding:10px 6px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .sumbox-val{font-size:22px;font-weight:700;color:#1a4a1a}
 .sumbox-lbl{font-size:8px;text-transform:uppercase;letter-spacing:1px;color:#8a7a5a;margin-top:2px}
-.stat-sum{background:#fff;border-radius:12px;margin:0 12px 10px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.stat-sum-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
-.stat-sum-box{background:#f5f0e8;border-radius:8px;padding:8px 4px;text-align:center}
 .tbl{width:100%;border-collapse:collapse;font-size:11px}
 .tbl th{background:#1a4a1a;color:rgba(255,255,255,.6);padding:7px 3px;text-align:center;font-size:8px;text-transform:uppercase;letter-spacing:.8px;font-weight:600}
 .tbl td{padding:7px 3px;text-align:center;border-bottom:1px solid #f0ead8;cursor:pointer}
@@ -296,88 +184,114 @@ input{font-family:'DM Sans',Georgia,sans-serif}
 .tbl tr.tot td{background:#1a4a1a;font-weight:700;color:#fff;cursor:default}
 .sdot{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff}
 
+/* ── AFSLUITEN ── */
+.finish-hero{background:linear-gradient(160deg,#1a4a1a,#2a6a2a);padding:30px 20px;text-align:center}
+.finish-hero h2{font-family:'Playfair Display',serif;font-size:24px;color:#e8d080;margin-bottom:6px}
+.finish-hero p{font-size:12px;color:rgba(255,255,255,.6);font-style:italic}
+.finish-score-big{font-family:'Playfair Display',serif;font-size:72px;color:#fff;font-weight:700;line-height:1;margin:16px 0 4px}
+.finish-vs-par{font-size:16px;font-weight:700;margin-bottom:4px}
+.finish-stab{font-size:13px;color:rgba(255,255,255,.6)}
+.finish-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px}
+.finish-box{background:#fff;border-radius:12px;padding:12px 6px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.finish-box-val{font-size:22px;font-weight:700;color:#1a4a1a}
+.finish-box-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#8a7a5a;margin-top:2px}
+.finish-caddie{background:#fff;border-radius:16px;margin:0 12px 12px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.finish-nieuw{display:block;width:calc(100% - 24px);margin:0 12px 12px;padding:16px;background:#1a4a1a;color:#e8d080;border:none;border-radius:14px;font-size:16px;font-weight:700;letter-spacing:.5px;text-align:center}
+
 /* ── INSTELLINGEN ── */
-.inst-doel-grid{display:flex;gap:8px;margin-bottom:8px}
-.reset-btn{
-  width:100%;padding:12px;background:#fff5f5;border:1.5px solid #f0c8c8;
-  color:#c03030;border-radius:12px;font-size:13px;font-weight:600;
-}
+.reset-btn{width:100%;padding:12px;background:#fff5f5;border:1.5px solid #f0c8c8;color:#c03030;border-radius:12px;font-size:13px;font-weight:600}
 .info-row{font-size:12px;color:#5a7a5a;line-height:1.9}
 </style>
 </head>
 <body>
 
-<!-- ══════════════ SETUP ══════════════ -->
+<!-- ══ SETUP ══════════════════════════════════════════════════════════ -->
 <div id="pg-setup" class="screen on">
   <div class="setup-hero">
     <h1>⛳ Capelle Caddie</h1>
     <p>Golf & Country Club Capelle aan den IJssel</p>
+    <div class="setup-steps" id="setup-steps"></div>
   </div>
 
-  <div class="setup-card">
-    <div class="setup-label">🎯 Doelscore vandaag</div>
-    <div class="doel-grid" id="setup-doel"></div>
-    <div id="setup-doel-sub" style="font-size:11px;color:#8a7a5a;font-style:italic;margin-top:8px"></div>
-  </div>
-
-  <div class="setup-card">
-    <div class="setup-label">🏌️ Tee kleur</div>
-    <div class="tee-grid" id="setup-tee"></div>
-  </div>
-
-  <div class="setup-card">
-    <div class="setup-label">👤 Handicap index</div>
-    <div class="hcp-row">
-      <button class="hcp-btn" onclick="hcpAdj(-0.1)">−</button>
-      <input type="number" id="hcp-inp" value="18" step="0.1" min="0" max="54" class="hcp-inp" oninput="hcpSet(this.value)"/>
-      <button class="hcp-btn" onclick="hcpAdj(0.1)">+</button>
+  <!-- Stap 1: Speelstijl -->
+  <div id="step-1" class="screen on">
+    <div class="setup-card">
+      <div class="setup-label">🏌️ Jouw speelstijl</div>
+      <div class="setup-sub">Dit bepaalt hoe je caddie denkt en adviseert. Je kunt dit later altijd aanpassen.</div>
+      <div class="stijl-grid" id="stijl-knoppen"></div>
     </div>
-    <div style="font-size:11px;color:#8a7a5a;margin-top:6px">Baanhandicap (slope 136): <b id="baanhcp" style="color:#1a4a1a">22</b></div>
+    <button class="setup-next" onclick="setupStap(2)">Volgende →</button>
   </div>
 
-  <div class="setup-card">
-    <div class="setup-label">🏌️ Clubafstanden (meter carry)</div>
-    <div id="clubs-lijst"></div>
+  <!-- Stap 2: Clubs + favorieten -->
+  <div id="step-2" class="screen">
+    <div class="setup-card">
+      <div class="setup-label">🏌️ Jouw clubafstanden</div>
+      <div class="setup-sub">Voer je gemiddelde carry-afstand in per club.</div>
+      <div id="clubs-lijst"></div>
+    </div>
+    <div class="setup-card">
+      <div class="setup-label">⭐ Favoriete clubs</div>
+      <div class="setup-sub">Kies de 4 clubs waar je het meeste vertrouwen in hebt. Je caddie bouwt het spelplan zo veel mogelijk rondom deze clubs. Tip: kies een lange club, twee middellange en een wedge.</div>
+      <div id="fav-lijst"></div>
+      <div class="fav-count" id="fav-count">0 van 4 gekozen</div>
+    </div>
+    <button class="setup-next" onclick="setupStap(3)">Volgende →</button>
+    <button class="setup-back" onclick="setupStap(1)">← Terug</button>
   </div>
 
-  <button class="start-btn" onclick="startRonde()">🏌️ Start ronde</button>
+  <!-- Stap 3: Tee + HCP + Doel -->
+  <div id="step-3" class="screen">
+    <div class="setup-card">
+      <div class="setup-label">🎯 Doelstelling vandaag</div>
+      <div class="doel-grid" id="doel-knoppen"></div>
+      <div id="doel-sub" style="font-size:11px;color:#8a7a5a;font-style:italic;margin-top:8px"></div>
+    </div>
+    <div class="setup-card">
+      <div class="setup-label">🏌️ Tee kleur</div>
+      <div class="tee-grid" id="tee-knoppen"></div>
+    </div>
+    <div class="setup-card">
+      <div class="setup-label">👤 Handicap index</div>
+      <div class="hcp-row">
+        <button class="hcp-btn" onclick="hcpAdj(-0.1)">−</button>
+        <input type="number" id="hcp-inp" value="18" step="0.1" min="0" max="54" class="hcp-inp" oninput="hcpSet(this.value)"/>
+        <button class="hcp-btn" onclick="hcpAdj(0.1)">+</button>
+      </div>
+      <div style="font-size:11px;color:#8a7a5a;margin-top:6px">Baanhandicap (slope 136): <b id="baanhcp" style="color:#1a4a1a">22</b></div>
+    </div>
+    <button class="setup-next" onclick="startRonde()">🏌️ Start ronde</button>
+    <button class="setup-back" onclick="setupStap(2)">← Terug</button>
+  </div>
 </div>
 
-<!-- ══════════════ APP ══════════════ -->
+<!-- ══ APP ════════════════════════════════════════════════════════════ -->
 <div id="pg-app" class="screen">
-
-  <!-- Live bar -->
   <div class="live-bar">
     <div class="live-logo">⛳ Capelle</div>
     <div class="live-right">
-      <div class="live-pill">
-        <div class="live-dot"></div>
-        <div class="live-text">LIVE</div>
-      </div>
+      <div class="live-pill"><div class="live-dot"></div><div class="live-text">LIVE</div></div>
       <div id="live-info" class="live-text" style="color:#fff"></div>
     </div>
   </div>
-
-  <!-- Tabs -->
   <div class="tabs">
     <button class="tab on" onclick="toonTab('hole',this)">⛳ Hole</button>
-    <button class="tab" onclick="toonTab('wind',this)">💨 Wind</button>
+    <button class="tab" onclick="toonTab('caddie',this)">🏌️ Caddie</button>
     <button class="tab" onclick="toonTab('kaart',this)">📋 Kaart</button>
+    <button class="tab" onclick="toonTab('wind',this)">💨 Wind</button>
     <button class="tab" onclick="toonTab('inst',this)">⚙️</button>
   </div>
 
-  <!-- ── HOLE ── -->
+  <!-- HOLE TAB -->
   <div id="tab-hole" class="screen on">
-
-    <!-- Hero -->
     <div class="hole-hero">
-      <div class="hole-hero-num" id="hero-bg-num">1</div>
+      <div class="hole-hero-bg" id="hero-bg">1</div>
       <div class="hole-nav-row">
         <button class="hole-nav-btn" id="prev-btn" onclick="gaHole(-1)">‹</button>
         <div class="hole-center">
-          <div class="hole-nr-label">Hole</div>
+          <div class="hole-nr-lbl">Hole</div>
           <div class="hole-nr" id="h-nr">1</div>
-          <div class="hole-doel" id="h-doel"></div>
+          <div id="h-doel-lbl" style="font-size:10px;margin-top:2px"></div>
         </div>
         <button class="hole-nav-btn" id="next-btn" onclick="gaHole(1)">›</button>
       </div>
@@ -387,35 +301,16 @@ input{font-family:'DM Sans',Georgia,sans-serif}
       </div>
       <div class="hole-chips" id="h-chips"></div>
     </div>
-
-    <!-- Dots -->
     <div class="dots-bar" id="dots"></div>
-
-    <!-- Layout -->
     <div class="card">
       <div class="card-toggle" onclick="klap('layout-body','layout-arr')">
         <div class="card-title" style="margin:0">🗺 Hole layout</div>
         <div class="card-toggle-icon" id="layout-arr">▲</div>
       </div>
-      <div id="layout-body" style="margin-top:10px"><div id="hole-svg"></div></div>
+      <div id="layout-body" style="margin-top:10px"><div id="hole-svg"></div><div id="hole-desc" style="margin-top:8px;font-size:11px;color:#8a7a5a;font-style:italic;line-height:1.5"></div></div>
     </div>
-
-    <!-- Caddie -->
-    <div class="card">
-      <div class="card-toggle" onclick="klap('caddie-body','caddie-arr')">
-        <div class="card-title" style="margin:0">🏌️ Caddie advies</div>
-        <div class="card-toggle-icon" id="caddie-arr">▲</div>
-      </div>
-      <div id="caddie-body" style="margin-top:12px">
-        <div id="caddie-situatie"></div>
-        <div id="caddie-opties"></div>
-        <div id="caddie-plan"></div>
-      </div>
-    </div>
-
-    <!-- Score -->
     <div class="score-card">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.4);margin-bottom:10px">✏️ Score invoeren</div>
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.4);margin-bottom:10px">✏️ Score</div>
       <div class="score-row">
         <button class="score-btn" onclick="scoreAdj(-1)">−</button>
         <div class="score-mid">
@@ -426,8 +321,6 @@ input{font-family:'DM Sans',Georgia,sans-serif}
         <button class="score-btn" onclick="scoreAdj(1)">+</button>
       </div>
     </div>
-
-    <!-- Stats -->
     <div class="card">
       <div class="card-title">📊 Statistieken</div>
       <div id="fw-sectie">
@@ -450,17 +343,73 @@ input{font-family:'DM Sans',Georgia,sans-serif}
         <button class="putt-btn" onclick="puttsAdj(1)">+</button>
       </div>
     </div>
-
-    <!-- Lopend -->
     <div class="lopend" id="lopend" style="display:none">
-      <div class="lopend-lbl" id="lopend-lbl"></div>
-      <div class="lopend-val" id="lopend-val"></div>
+      <div style="font-size:11px;color:#8a7a5a" id="lopend-lbl"></div>
+      <div style="font-size:15px;font-weight:700" id="lopend-val"></div>
     </div>
-
     <button class="next-btn" id="next-hole-btn" onclick="gaHole(1)">Volgende hole →</button>
   </div>
 
-  <!-- ── WIND ── -->
+  <!-- CADDIE TAB -->
+  <div id="tab-caddie" class="screen">
+    <div class="hole-hero">
+      <div class="hole-hero-bg" id="caddie-bg">1</div>
+      <div class="hole-nav-row">
+        <button class="hole-nav-btn" onclick="gaHole(-1)">‹</button>
+        <div class="hole-center">
+          <div class="hole-nr-lbl">Hole</div>
+          <div class="hole-nr" id="caddie-nr">1</div>
+          <div id="caddie-doel-lbl" style="font-size:10px;margin-top:2px"></div>
+        </div>
+        <button class="hole-nav-btn" onclick="gaHole(1)">›</button>
+      </div>
+      <div class="hole-dist-row">
+        <div class="hole-dist-big" id="caddie-dist">346</div>
+        <div class="hole-dist-unit">meter</div>
+      </div>
+      <div class="hole-chips" id="caddie-chips"></div>
+    </div>
+    <div class="caddie-header-card">
+      <div class="caddie-top">
+        <div class="caddie-avatar">🏌️</div>
+        <div>
+          <div class="caddie-name-txt">Jouw Caddie</div>
+          <div class="caddie-role-txt">Capelle Specialist · Tour Experience</div>
+        </div>
+      </div>
+      <div class="speech-wrap"><div class="speech-bubble"><div class="speech-text" id="caddie-speech"></div></div></div>
+    </div>
+    <div class="map-card">
+      <div class="map-header">
+        <div class="map-title">🗺 Landing zones</div>
+        <div class="map-slag-tabs" id="map-tabs"></div>
+      </div>
+      <div class="map-body"><div id="caddie-map"></div></div>
+    </div>
+    <div id="caddie-slagen"></div>
+    <div id="caddie-risico"></div>
+    <div style="height:20px"></div>
+  </div>
+
+  <!-- KAART TAB -->
+  <div id="tab-kaart" class="screen">
+    <div class="sumbar">
+      <div class="sumbox"><div class="sumbox-val" id="tot-bruto">—</div><div class="sumbox-lbl">Bruto</div></div>
+      <div class="sumbox"><div class="sumbox-val" id="tot-diff">—</div><div class="sumbox-lbl">vs Par</div></div>
+      <div class="sumbox"><div class="sumbox-val" id="tot-stab">0</div><div class="sumbox-lbl">Stableford</div></div>
+      <div class="sumbox"><div class="sumbox-val" id="tot-putts">—</div><div class="sumbox-lbl">Putts</div></div>
+    </div>
+    <div id="stat-sum" style="display:none" class="card">
+      <div class="card-title">📊 Statistieken</div>
+      <div id="stat-sum-content" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"></div>
+    </div>
+    <div style="margin:0 12px;overflow-x:auto;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
+      <table class="tbl" id="kaart-tbl"></table>
+    </div>
+    <div style="padding:8px 12px 20px;font-size:10px;color:#b0a080;font-style:italic">Tik op een hole om daarheen te gaan.</div>
+  </div>
+
+  <!-- WIND TAB -->
   <div id="tab-wind" class="screen">
     <div class="card">
       <div class="card-title">💨 Windrichting</div>
@@ -469,39 +418,23 @@ input{font-family:'DM Sans',Georgia,sans-serif}
     <div class="card">
       <div class="card-title">💨 Windkracht: <span id="wind-lbl" style="color:#1a4a1a;font-weight:700">0 km/h</span></div>
       <input type="range" min="0" max="40" value="0" id="wind-slider" oninput="windSet(this.value)" style="width:100%;accent-color:#1a4a1a;margin:8px 0"/>
-      <div style="display:flex;justify-content:space-between;font-size:10px;color:#8a7a5a">
-        <span>Geen</span><span>Matig (20)</span><span>Sterk (40)</span>
-      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:#8a7a5a"><span>Geen</span><span>Matig (20)</span><span>Sterk (40)</span></div>
     </div>
     <div class="card">
       <div class="card-title">📐 Effect per hole</div>
-      <div id="wind-lijst"><div style="font-size:12px;color:#8a7a5a;font-style:italic">Stel windkracht in om effect te zien.</div></div>
+      <div id="wind-lijst"><div style="font-size:12px;color:#8a7a5a;font-style:italic">Stel windkracht in om het effect te zien.</div></div>
     </div>
   </div>
 
-  <!-- ── KAART ── -->
-  <div id="tab-kaart" class="screen">
-    <div class="sumbar">
-      <div class="sumbox"><div class="sumbox-val" id="tot-bruto">—</div><div class="sumbox-lbl">Bruto</div></div>
-      <div class="sumbox"><div class="sumbox-val" id="tot-diff">—</div><div class="sumbox-lbl">vs Par</div></div>
-      <div class="sumbox"><div class="sumbox-val" id="tot-stab">0</div><div class="sumbox-lbl">Stableford</div></div>
-      <div class="sumbox"><div class="sumbox-val" id="tot-putts">—</div><div class="sumbox-lbl">Putts</div></div>
-    </div>
-    <div id="stat-sum" class="stat-sum" style="display:none">
-      <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#8a7a5a;font-weight:700">📊 Statistieken</div>
-      <div class="stat-sum-grid" id="stat-sum-content"></div>
-    </div>
-    <div style="margin:0 12px;overflow-x:auto;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
-      <table class="tbl" id="kaart-tbl"></table>
-    </div>
-    <div style="padding:8px 12px 20px;font-size:10px;color:#b0a080;font-style:italic">Tik op een hole om daarheen te gaan.</div>
-  </div>
-
-  <!-- ── INSTELLINGEN ── -->
+  <!-- INSTELLINGEN TAB -->
   <div id="tab-inst" class="screen">
     <div class="card">
-      <div class="card-title">🎯 Doelscore wijzigen</div>
-      <div class="inst-doel-grid" id="inst-doel"></div>
+      <div class="card-title">🎯 Doelstelling wijzigen</div>
+      <div class="doel-grid" id="inst-doel"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏌️ Speelstijl wijzigen</div>
+      <div class="stijl-grid" id="inst-stijl"></div>
     </div>
     <div class="card">
       <div class="card-title">🔄 Nieuwe ronde</div>
@@ -517,64 +450,201 @@ input{font-family:'DM Sans',Georgia,sans-serif}
       </div>
     </div>
   </div>
+</div>
 
+<!-- ══ AFSLUITEN ══════════════════════════════════════════════════════ -->
+<div id="pg-finish" class="screen">
+  <div class="finish-hero">
+    <h2>🏆 Ronde afgerond!</h2>
+    <p>Golf & Country Club Capelle aan den IJssel</p>
+    <div class="finish-score-big" id="fin-score">—</div>
+    <div class="finish-vs-par" id="fin-diff"></div>
+    <div class="finish-stab" id="fin-stab"></div>
+  </div>
+  <div class="finish-grid">
+    <div class="finish-box"><div class="finish-box-val" id="fin-fw">—</div><div class="finish-box-lbl">Fairways</div></div>
+    <div class="finish-box"><div class="finish-box-val" id="fin-gir">—</div><div class="finish-box-lbl">GIR</div></div>
+    <div class="finish-box"><div class="finish-box-val" id="fin-putts">—</div><div class="finish-box-lbl">Putts</div></div>
+  </div>
+  <div class="finish-caddie">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="caddie-avatar">🏌️</div>
+      <div><div class="caddie-name-txt" style="color:#1a4a1a">Jouw Caddie</div><div class="caddie-role-txt" style="color:#8a7a5a">Eindoordeel</div></div>
+    </div>
+    <div class="speech-bubble"><div class="speech-text" id="fin-caddie"></div></div>
+  </div>
+  <button class="finish-nieuw" onclick="resetRonde()">🏌️ Nieuwe ronde starten</button>
 </div>
 
 <script>
-// ── DATA ────────────────────────────────────────────────────────────────────
+// ── DATA ─────────────────────────────────────────────────────────────────────
 var H=[
-  {n:1,p:4,si:4,g:346,o:256,r:121,w:0,ob:"links green",b:1,s:"drs",wpos:null,dt:"links-midden fairway",ap:"vanuit links aanspelen",gt:"Breed maar versmalt — precisie loont"},
-  {n:2,p:4,si:2,g:366,o:276,r:333,w:0,ob:"rondom green",b:1,s:"dl",wpos:null,dt:"hoek dogleg bereiken, links van midden",ap:"kort voor green is altijd veilig",gt:"Scherpe dogleg links — hoek goed inschatten"},
-  {n:3,p:3,si:14,g:160,o:119,r:200,w:0,ob:"rechts",b:1,s:"st",wpos:null,dt:"links-midden green",ap:"direct op green",gt:"OB rechts — mis liever links"},
-  {n:4,p:5,si:16,g:456,o:348,r:214,w:0,ob:"rechts",b:1,s:"sn",wpos:null,dt:"links van midden, op de wilg mikken",ap:"niet over de green spelen",gt:"Smalle fairway — rechts is altijd fout"},
-  {n:5,p:3,si:8,g:140,o:110,r:107,w:1,ob:"rechts",b:0,s:"st",wpos:"rondom",dt:"midden green, hoog spelen",ap:"direct op green",gt:"Water rondom — neem genoeg club"},
-  {n:6,p:4,si:18,g:272,o:208,r:286,w:0,ob:"achter green",b:1,s:"st",wpos:null,dt:"rechts van de twee wilgen",ap:"niet te lang spelen",gt:"Makkelijkste hole — maak hem niet moeilijk"},
-  {n:7,p:3,si:10,g:155,o:116,r:201,w:0,ob:"achter green",b:1,s:"st",wpos:null,dt:"midden-links green",ap:"direct op green",gt:"Bunkers rondom — speel naar het grote deel"},
-  {n:8,p:4,si:6,g:384,o:288,r:177,w:0,ob:null,b:1,s:"st",wpos:null,dt:"midden fairway, ruimte genoeg",ap:"open aanvliegroute, speel naar vlag",gt:"Vriendelijke hole — longhitters kunnen aanvallen"},
-  {n:9,p:5,si:12,g:464,o:360,r:418,w:1,ob:null,b:1,s:"st",wpos:"voor green",dt:"brede fairway, positie kiezen",ap:"linkerkant opzoeken voor 2e slag",gt:"Water voor green — ken je afstand"},
-  {n:10,p:3,si:9,g:147,o:89,r:121,w:1,ob:null,b:0,s:"st",wpos:"rondom",dt:"midden green, hoog spelen",ap:"direct op green",gt:"Water rondom — focus en genoeg club"},
-  {n:11,p:4,si:7,g:393,o:302,r:333,w:1,ob:null,b:1,s:"st",wpos:"50m voor green",dt:"midden fairway, zo ver mogelijk",ap:"lay-up als twijfel",gt:"Water 50m voor green — bewuste keuze maken"},
-  {n:12,p:4,si:17,g:233,o:181,r:200,w:0,ob:null,b:1,s:"st",wpos:null,dt:"ijzer van tee voor controle",ap:"precisie boven lengte",gt:"Birdie kans — laat driver in de tas"},
-  {n:13,p:4,si:15,g:260,o:193,r:214,w:0,ob:"rechts",b:1,s:"st",wpos:null,dt:"links van midden fairway",ap:"rechte lijn naar green",gt:"OB rechts — veiligheid is prioriteit"},
-  {n:14,p:3,si:11,g:117,o:107,r:107,w:0,ob:null,b:1,s:"st",wpos:null,dt:"midden green, neem genoeg club",ap:"direct op green",gt:"Kortste hole — bunkers voor en naast"},
-  {n:15,p:4,si:3,g:326,o:256,r:286,w:1,ob:"rechts achter green",b:1,s:"dl",wpos:"voor green",dt:"hoek dogleg links bereiken",ap:"over water of via hoek aanspelen",gt:"Signature hole — lastigste van de achterkant"},
-  {n:16,p:4,si:13,g:232,o:177,r:201,w:0,ob:"links achter green",b:1,s:"drs",wpos:null,dt:"links fairway voor open aanvliegroute",ap:"kort voor green is veilig",gt:"Links fairway geeft beste aanvliegroute"},
-  {n:17,p:3,si:5,g:205,o:159,r:177,w:0,ob:null,b:1,s:"st",wpos:null,dt:"links van midden, weg van bunker",ap:"neem een club extra — wind!",gt:"Langste par 3 — wind is bepalend hier"},
-  {n:18,p:5,si:1,g:499,o:380,r:418,w:0,ob:null,b:1,s:"dr",wpos:null,dt:"hoek dogleg rechts halen",ap:"niet over green spelen",gt:"Zwaarste hole (SI1) — groen in 3 is prima"}
+  {n:1,p:4,si:4,g:346,o:256,r:121,w:0,ob:"links green",b:1,s:"drs",desc:"Breed begin maar de fairway versmalt na 220 meter. Links van het midden is de beste positie."},
+  {n:2,p:4,si:2,g:366,o:276,r:333,w:0,ob:"rondom green",b:1,s:"dl",desc:"Scherpe dogleg links. De hoek raken is cruciaal voor een open aanvliegroute naar de green."},
+  {n:3,p:3,si:14,g:160,o:119,r:200,w:0,ob:"rechts",b:1,s:"st",desc:"Par 3 met OB rechts en bunker links. Links-midden is de veilige zone."},
+  {n:4,p:5,si:16,g:456,o:348,r:214,w:0,ob:"rechts",b:1,s:"sn",desc:"Smalle pijpenla, OB rechts de hele weg. Drie comfortabele slagen is het devies."},
+  {n:5,p:3,si:8,g:140,o:110,r:107,w:1,ob:"rechts",b:0,s:"st",desc:"Par 3 omringd door water. Hoge bal, midden green, genoeg club."},
+  {n:6,p:4,si:18,g:272,o:208,r:286,w:0,ob:"achter green",b:1,s:"st",desc:"Makkelijkste hole van de baan. Laat de driver in de tas, ijzer voor controle."},
+  {n:7,p:3,si:10,g:155,o:116,r:201,w:0,ob:"achter green",b:1,s:"st",desc:"Bunkers rondom de green en OB achter. Speel naar het grote deel van de green."},
+  {n:8,p:4,si:6,g:384,o:288,r:177,w:0,ob:null,b:1,s:"st",desc:"Vriendelijke lange par 4. Ruime fairway, open aanvliegroute. Longhitters kunnen aanvallen."},
+  {n:9,p:5,si:12,g:464,o:360,r:418,w:1,ob:null,b:1,s:"st",desc:"Sluitstuk voorkant. Drive links houden. Water voor green — ken je carry-afstand."},
+  {n:10,p:3,si:9,g:147,o:89,r:121,w:1,ob:null,b:0,s:"st",desc:"Water rondom. Perfecte start achterkant — focus, hoge bal, genoeg club."},
+  {n:11,p:4,si:7,g:393,o:302,r:333,w:1,ob:null,b:1,s:"st",desc:"Water 50m voor de green. Lange drive nodig. Bewuste keuze bij de tweede slag."},
+  {n:12,p:4,si:17,g:233,o:181,r:200,w:0,ob:null,b:1,s:"st",desc:"Korte par 4, birdie kans. IJzer van de tee, bunkers rondom de green."},
+  {n:13,p:4,si:15,g:260,o:193,r:214,w:0,ob:"rechts",b:1,s:"st",desc:"OB rechts. Links van het midden houden, veiligheid is prioriteit."},
+  {n:14,p:3,si:11,g:117,o:107,r:107,w:0,ob:null,b:1,s:"st",desc:"Kortste hole van de baan. Bunkers voor en naast — vlieg ze, neem genoeg club."},
+  {n:15,p:4,si:3,g:326,o:256,r:286,w:1,ob:"rechts achter green",b:1,s:"dl",desc:"Signature hole. Dogleg links, water voor green, OB rechts achter. Lange drive cruciaal."},
+  {n:16,p:4,si:13,g:232,o:177,r:201,w:0,ob:"links achter green",b:1,s:"drs",desc:"Links fairway geeft open aanvliegroute. Korte hole, birdie kans."},
+  {n:17,p:3,si:5,g:205,o:159,r:177,w:0,ob:null,b:1,s:"st",desc:"Langste par 3 van de baan. Wind is hier altijd een factor — check hem goed."},
+  {n:18,p:5,si:1,g:499,o:380,r:418,w:0,ob:null,b:1,s:"dr",desc:"Zwaarste hole van Capelle, SI 1. Dogleg rechts. Groen in drie en twee putten is een geweldig resultaat."}
 ];
 
-var CLUBS=[{nm:"Driver",d:230},{nm:"3-hout",d:205},{nm:"5-hout",d:185},{nm:"4-ijzer",d:170},{nm:"5-ijzer",d:158},{nm:"6-ijzer",d:145},{nm:"7-ijzer",d:132},{nm:"8-ijzer",d:120},{nm:"9-ijzer",d:107},{nm:"PW",d:93},{nm:"SW",d:75}];
-
-var TEE="g", DOEL="bogey", HCP=18, CUR=0, WS=0, WD=0, EDIT=-1;
-var SC=new Array(18).fill(0);
-var ST=[];
-for(var _=0;_<18;_++) ST.push({fw:null,gir:null,pt:0});
-
-var DC={
-  bogey:{l:"Bogey golf",c:"#8a4a0a",bg:"#fff8f0",border:"#f0c8a0",i:"🎯",s:"Veilig spelen — vermijd straf, maak nette scores"},
-  par:  {l:"Par golf",  c:"#1a4a1a",bg:"#f0f7f0",border:"#c8e0c8",i:"⭐",s:"Slim opbouwen — positie creëren per hole"},
-  birdie:{l:"Birdie jagen",c:"#0a2a5a",bg:"#f0f4ff",border:"#c8d4f0",i:"🦅",s:"Aanvallend spelen — ga voor de birdie"}
+// Caddie teksten per hole, per stijl, per doel
+var CADDIE_TEKSTEN = {
+  1:{
+    kort:   "Lange hole voor jou, maar we bouwen hem rustig op. Neem je langste club, speel naar de fairway. Eén slag tegelijk — je haalt die green echt.",
+    cons:   "Rustig beginnen. Neem je 3-hout, speel naar links van het midden — de fairway versmalt na 220 meter dus niet te gretig. Van daar heb je een comfortabele inslag. Lekker rustig, we zijn net begonnen.",
+    gebA:   "Driver is prima maar houd hem links. De fairway lijkt breed maar trekt snel samen. Solide slag, goede positie voor de inslag. Par of beter, we gaan door.",
+    agressief: "Driver, links van het midden. Hoe dichter bij de green hoe beter — de aanvliegroute is het makkelijkst vanuit links. Commit, dit is een hole waar je birdie kunt maken."
+  },
+  2:{
+    kort:   "Dit is een lange hole — geen zorgen, we spelen hem in vier comfortabele slagen. Langste club die je vertrouwt, speel naar de fairway. De dogleg links speelt vanzelf.",
+    cons:   "Moeilijkste par 4 van de voorkant. OB rondom de green dus we spelen geen held vandaag. <b>3-hout links</b>, bal in het spel houden. Een bogey hier is een prima score — echt waar.",
+    gebA:   "Dogleg links — je wilt de hoek raken. Driver links van het midden, niet de dogleg najagen. Bal in het spel en je hebt een hanteerbare inslag. Par is een goed resultaat hier.",
+    agressief: "Raak de hoek van de dogleg — daar opent de hole zich. Driver, gecommitteerde swing, linkerkant. Van daar kun je de green aanvallen. OB rondom de green — kies je lijn zorgvuldig."
+  },
+  3:{
+    kort:   "Par 3 — één slag naar de green. Neem je beste club voor deze afstand, mik op het midden van de green en houd hem weg van rechts. Goed gespeeld als je de green haalt.",
+    cons:   "OB rechts, bunker links — midden green, niets bijzonders. Neem een club extra, liever iets te lang dan OB. Twee putten en we lopen tevreden door.",
+    gebA:   "Rechttoe rechtaan par 3 maar respecteer die OB rechts. Mikken op links-midden, laat de club het werk doen. Jij hebt dit.",
+    agressief: "We gaan op de vlag. Links-midden van de green, gecontroleerde swing. Birdie kans als je hem dichtbij krijgt — maar niet naar rechts laten lopen."
+  },
+  4:{
+    kort:   "Lange par 5 maar geen stress — dit is gewoon een vijf-slaggers hole voor jou en dat is precies goed. Elke slag op de fairway, OB rechts altijd vermijden. Rustig opbouwen.",
+    cons:   "Smalle fairway, OB rechts de hele weg. Dit is niet de hole om een held te zijn. Kies een plek links van het midden, bouw de hole op in drie comfortabele slagen. Bogey of beter, prima gedaan.",
+    gebA:   "Driver op de linkerkant — mik op de wilg, die houdt je op de fairway. Nooit naar rechts. Vanuit een goede drive heb je een echte kans op een makkelijke derde slag.",
+    agressief: "Je kunt hier een birdiekans creëren als de drive goed is. Linkerkant, gebruik de wilg als doel. Niet slim proberen de hoek te snijden — de rough rechts breekt je ronde."
+  },
+  5:{
+    kort:   "Water rondom — maar jij kunt dit. Neem je beste club voor deze afstand, speel hoog naar het midden van de green. Niet naar de pin, gewoon de green halen. Dat is hier winst.",
+    cons:   "Water overal. Eén club extra, midden green, hoge bal. Dit gaat niet over slim zijn — het gaat over de green halen en weglopen met een par. Simpel.",
+    gebA:   "Omringd door water dus we respecteren het. Solide slag, midden green. De wind is hier bepalend — check hem voor je een club pakt. Vertrouw je swing.",
+    agressief: "Water overal maar je kunt de vlag aanvallen als die op de veilige kant staat. Eén club extra, hoog en gecommitteerd. Laat het water niet in je hoofd kruipen — kies je doel en ga."
+  },
+  6:{
+    kort:   "Kortste hole van de voorkant voor jou — dit is jouw kans. Langste club die je vertrouwt, speel naar de fairway. Van hier kun je de green bereiken. Geniet ervan.",
+    cons:   "Makkelijkste hole van de baan. IJzer van de tee, midden fairway. Niet te veel nadenken — dit is jouw birdiekans van de dag. Ontspan en geniet.",
+    gebA:   "Korte par 4 — driver mag maar let op de wal achter de green, die is dichterbij dan hij lijkt. IJzer of hybrid is de slimme keuze. Van een goede positie maak je hier je score.",
+    agressief: "Dit is jouw hole. Driver als je het voelt — je kunt de green bijna rijden. Zo niet, dan heb je een wedge in handen. Birdie is hier gewoon haalbaar."
+  },
+  7:{
+    kort:   "Par 3 — neem je beste club voor deze afstand en mik op het midden van de green. Bunkers rondom maar als je de green haalt, is alles goed. Rustige swing.",
+    cons:   "Bunkers rondom de green en OB achter — dit is geen hole voor avontuur. Midden green, genoeg club. Een par hier en we zijn blij.",
+    gebA:   "Speel naar links-midden, weg van de bunkers rechts. Solide tee shot, twee putten. Niks meer nodig hier.",
+    agressief: "De vlag bepaalt de keuze hier. Staat die links? Ga erop. Staat die rechts? Speel midden en putt naar de pin. Birdie is mogelijk maar bunkers rechts zijn gevaarlijk."
+  },
+  8:{
+    kort:   "Lange hole maar vriendelijk. Speel elke slag naar de fairway, bouw rustig op. De green komt vanzelf dichterbij. Jij kunt dit in vier slagen.",
+    cons:   "Lange par 4 maar eigenlijk een vriendelijke hole. 3-hout op de fairway, dan een middel ijzer naar de green. Rustig opbouwen, bogey is een goed resultaat hier.",
+    gebA:   "Driver mag hier — ruime fairway, weinig gevaar. Sla hem solide, je hebt een open aanvliegroute. Par is haalbaar als de inslag goed is.",
+    agressief: "Dit is jouw hole als longhitter. Vol uitslaan, je krijgt een korte inslag. Van een goede drive kun je birdie maken — open fairway, geen excuses."
+  },
+  9:{
+    kort:   "Sluitstuk van de voorkant. Speel elke slag veilig naar de fairway, blijf weg van rechts. Water voor de green — stop daar voor en chip erop. Goede score op deze hole is een mooie afsluiting.",
+    cons:   "Sluitstuk van de voorkant. Driver op de brede linkerkant, niet naar rechts. Tweede slag ook links houden — dan heb je een open aanvliegroute. Water voor de green dus ken je afstand bij de derde slag.",
+    gebA:   "Goede par 5 om op te bouwen. Drive links, tweede slag ook links houden voor de beste aanvliegroute. Water voor de green — lay-up als je twijfelt, dat is de slimme keuze.",
+    agressief: "Twee goede slagen en je staat dicht bij de green. Drive zo ver mogelijk links, tweede slag richting de green maar stop voor het water. Dan een korte inslag voor je birdiekans."
+  },
+  10:{
+    kort:   "Welkom op de achterkant. Water rondom maar jij kunt dit — neem je beste club voor deze afstand, speel hoog naar het midden. Nieuwe ronde, fris begin.",
+    cons:   "Water rondom — welkom op de achterkant. Hoge bal, midden green, genoeg club. Geen helden hier. Par is een perfecte start van de achterkant.",
+    gebA:   "Focus. Water alle kanten op maar de green is goed bereikbaar. Eén extra club, hoog en gecontroleerd. Vertrouw je swing.",
+    agressief: "Water overal maar laat het je niet klein maken. Kies je club, commit volledig, hoge bal naar midden green. Birdie kans als je hem dichtbij krijgt."
+  },
+  11:{
+    kort:   "Lange hole — bouw hem rustig op. Langste club naar de fairway, dan weer een slag vooruit. Water 50 meter voor de green: stop daar voor en speel een korte chip erop.",
+    cons:   "Lange par 4, water 50 meter voor de green. Weet je afstand — als je twijfelt, lay-up. Liever een korte chip dan nat. Bogey is hier een goed resultaat.",
+    gebA:   "Driver zo ver mogelijk, dan bewuste keuze bij de tweede slag. Water ligt op 50 meter voor de green — ken je carry-afstand en speel slim. Par is haalbaar.",
+    agressief: "Lange drive nodig hier. Dan bij de tweede slag: weet precies hoeveel je draagt. Water op 50 meter is gevaarlijk maar als de drive goed is kun je de green aanvallen."
+  },
+  12:{
+    kort:   "Kortere hole — goed nieuws voor jou. Neem je langste club voor de drive, dan kom je goed in positie. Van hier kun je de green in twee slagen halen. Pak deze kans.",
+    cons:   "Korte par 4 — laat de driver in de tas. IJzer van de tee voor controle, dan een korte inslag. Bunkers rondom de green dus precisie is belangrijker dan lengte.",
+    gebA:   "Dit is jouw scorekans. IJzer van de tee, midden fairway, dan een wedge naar de green. Rustig en gecontroleerd — zo maak je hier je score.",
+    agressief: "Birdie hole. IJzer van de tee voor de beste positie, dan aanvallen met je wedge. Bunkers rondom maar als je hem dichtbij krijgt is één putt zeker mogelijk."
+  },
+  13:{
+    kort:   "OB rechts dus we spelen altijd links. Langste club die je vertrouwt, speel naar de linkerkant van de fairway. Dan rustig naar de green toe werken. Geen stress.",
+    cons:   "OB rechts dus we spelen links van het midden. IJzer van de tee als je wilt — veiligheid is hier prioriteit. Geen straf, bogey of beter, door naar de volgende.",
+    gebA:   "Links van het midden, weg van de OB rechts. Driver mag maar houd hem gecontroleerd. Van een goede drive heb je een makkelijke inslag.",
+    agressief: "Driver links — niet te ver rechts want OB straft hier hard. Vanuit een goede positie kun je de green aanvallen. Scorekans op deze hole."
+  },
+  14:{
+    kort:   "Kortste hole van de baan — jouw kans! Neem je beste club voor deze afstand, mik op het midden van de green en vlieg die bunkers. Je kunt dit makkelijk in twee slagen.",
+    cons:   "Kortste hole van de baan. Bunkers voor en naast de green — neem genoeg club. Midden green, twee putten, par. Simpel als je hem niet ingewikkeld maakt.",
+    gebA:   "Klein maar gevaarlijk. Bunkers liggen voor en naast dus vliegen moet je. Eén club extra, midden green. Jij hebt dit.",
+    agressief: "Ga op de vlag. Kort genoeg om het te riskeren — maar vlieg de bunkers wel. Eén goede swing en je staat op tap-in afstand."
+  },
+  15:{
+    kort:   "Lastige hole maar wij spelen hem rustig. Langste club naar de hoek van de dogleg. Dan een slag vooruit, stop voor het water. Dan een korte chip op de green. Vier slagen en we zijn blij.",
+    cons:   "Signature hole en de lastigste van de achterkant. Water voor de green, OB rechts achter. Speel de hoek van de dogleg, dan een bewuste keuze bij de tweede slag. Bogey hier is goud waard.",
+    gebA:   "Lange drive nodig om de hoek te raken. Dan bij de tweede slag: water voor de green bepaalt alles. Ken je carry-afstand en neem de juiste beslissing. Par is een uitstekend resultaat.",
+    agressief: "Raak de hoek — alles staat of valt met de drive. Dan over het water aanvallen als de afstand klopt. OB rechts achter de green dus niet te ver. Birdie is mogelijk maar geen halve maatregelen."
+  },
+  16:{
+    kort:   "Kortere hole — mooi. Speel je langste club naar links van de fairway. Dan een slag vooruit richting de green. Van dichtbij kun jij dit ook in twee slagen spelen.",
+    cons:   "Links van de fairway geeft de beste aanvliegroute. IJzer van de tee voor controle, dan een korte inslag. OB links achter de green — niet te lang. Makkelijke bogey als je het slim speelt.",
+    gebA:   "Speel links van het midden — dat opent de green voor je. Driver mag maar gecontroleerd. Van een goede positie heb je een wedge in handen.",
+    agressief: "Links fairway, dan aanvallen. Korte hole dus birdie is zeker haalbaar. OB links achter de green — speel naar midden en putt naar de pin."
+  },
+  17:{
+    kort:   "Langste par 3 — maar weet je, als je hem op de green haalt ben je al heel goed bezig. Check de wind zorgvuldig, neem je beste club voor deze afstand. Eén goede swing.",
+    cons:   "Langste par 3 van de baan en wind is hier altijd een factor. Check de wind zorgvuldig, neem genoeg club, speel links van de bunker rechts. Par is hier een heel goed resultaat.",
+    gebA:   "Wind bepaalt alles op deze hole. Kijk goed, kies bewust, en speel links van het midden. Solide swing, vertrouw je club. Twee putten en door.",
+    agressief: "Wind check eerst — dan aanvallen. Als de wind mee zit kun je dichtbij komen. Links van de bunker rechts, hoge bal, gecommitteerde swing. Birdie kans als de wind goed is."
+  },
+  18:{
+    kort:   "Laatste hole — je hebt de hele ronde gespeeld, dat is geweldig. Nu rustig afsluiten. Langste club naar de hoek van de dogleg, dan opbouwen. Geniet van elke slag. Je caddie is trots op je.",
+    cons:   "Zwaarste hole van de baan, SI 1. Geen paniek — drie comfortabele slagen naar de green. Driver naar de hoek van de dogleg, tweede slag midden fairway, dan een rustige inslag. Groen in drie en twee putten is een geweldig resultaat. Geniet van de laatste hole.",
+    gebA:   "Raak de hoek van de dogleg rechts — dat maakt de rest van de hole veel makkelijker. Tweede slag positie kiezen, dan een goede inslag. Par of bogey, beide zijn prima op de moeilijkste hole van Capelle.",
+    agressief: "Raak de hoek, dan zo dicht mogelijk bij de green. Als de tweede slag goed is heb je een birdiekans. Maar niet over de green — te lang is hier gevaarlijk. Commit aan de hoek en bouw van daar."
+  }
 };
+
+var CLUBS=[{nm:"Driver",d:230},{nm:"3-hout",d:205},{nm:"5-hout",d:185},{nm:"4-ijzer",d:170},{nm:"5-ijzer",d:158},{nm:"6-ijzer",d:145},{nm:"7-ijzer",d:132},{nm:"8-ijzer",d:120},{nm:"9-ijzer",d:107},{nm:"PW",d:93},{nm:"SW",d:75}];
+var FAV=[];
+var TEE="g",DOEL="bogey",STIJL="cons",HCP=18,CUR=0,WS=0,WD=0,EDIT=-1,SETUP_STAP=1,ACTIEVE_SLAG=0;
+var SC=new Array(18).fill(0);
+var ST=[];for(var _i=0;_i<18;_i++)ST.push({fw:null,gir:null,pt:0});
+
+var DC={bogey:{l:"Bogey golf",c:"#8a4a0a",bg:"#fff8f0",bc:"#f0c8a0",i:"🎯",s:"Veilig spelen — vermijd straf, maak nette scores"},par:{l:"Par golf",c:"#1a4a1a",bg:"#f0f7f0",bc:"#c8e0c8",i:"⭐",s:"Slim opbouwen — positie creëren per hole"},birdie:{l:"Birdie jagen",c:"#0a2a5a",bg:"#f0f4ff",bc:"#c8d4f0",i:"🦅",s:"Aanvallend spelen — ga voor de birdie"}};
 var TC={g:"#d4a017",o:"#e07020",r:"#c0302a"};
 var TL={g:"Geel",o:"Oranje",r:"Rood"};
+var SC_DATA={
+  kort:{l:"🐢 Kort spel",desc:"Max ~120m · De caddie bouwt elk plan op in kleine, betrouwbare stappen rondom jouw afstanden."},
+  cons:{l:"🛡️ Conservatief",desc:"Veiligheid eerst · Vermijd straf, speel naar de fairway, bouw rustig op."},
+  gebA:{l:"⭐ Gebalanceerd",desc:"Slim spelen · Mix van veilig en aanvallend, afhankelijk van de hole."},
+  agressief:{l:"🔥 Aanvallend",desc:"Vol gas · Maximale afstand, aanvallen op de pin, birdie is het doel."}
+};
 var WDIR=[{l:"↑ Tegenwind",v:0},{l:"↗ Schuin tegen",v:45},{l:"→ Dwars",v:90},{l:"↘ Schuin mee",v:135},{l:"↓ Meewind",v:180},{l:"↙ Schuin mee",v:225},{l:"← Dwars",v:270},{l:"↖ Schuin tegen",v:315}];
 var SHAPES={1:"drs",2:"dl",3:"st",4:"sn",5:"st",6:"st",7:"st",8:"st",9:"st",10:"st",11:"st",12:"st",13:"st",14:"st",15:"dl",16:"drs",17:"st",18:"dr"};
 
-// ── HELPERS ──────────────────────────────────────────────────────────────────
+// ── HELPERS ───────────────────────────────────────────────────────────────────
 function tdist(h){return TEE==="g"?h.g:TEE==="o"?h.o:h.r;}
 function wadj(d){return Math.round(d*(1+Math.cos(WD*Math.PI/180)*WS*0.01));}
-function bestClub(d){if(!d)return null;return CLUBS.reduce(function(b,c){return Math.abs(c.d-d)<Math.abs(b.d-d)?c:b;});}
+function bestClub(d){if(!d||d<=0)return null;var pool=FAV.length>=2?CLUBS.filter(function(c,i){return FAV.indexOf(i)>=0;}):CLUBS;var best=pool.reduce(function(b,c){return Math.abs(c.d-d)<Math.abs(b.d-d)?c:b;});if(Math.abs(best.d-d)>30){best=CLUBS.reduce(function(b,c){return Math.abs(c.d-d)<Math.abs(b.d-d)?c:b;});}return best;}
+function bestClubAll(d){if(!d||d<=0)return null;return CLUBS.reduce(function(b,c){return Math.abs(c.d-d)<Math.abs(b.d-d)?c:b;});}
 function clubOnder(max){var u=CLUBS.filter(function(c){return c.d<=max;});if(!u.length)return CLUBS[CLUBS.length-1];return u.reduce(function(b,c){return c.d>b.d?c:b;});}
 function stabP(i){var s=SC[i];if(!s)return null;var h=H[i];var sh=Math.floor(HCP/18)+(h.si<=(HCP%18)?1:0);var d=s-sh-h.p;return d<=-2?4:d===-1?3:d===0?2:d===1?1:0;}
 function stabTot(){var t=0;for(var i=0;i<18;i++){var p=stabP(i);if(p!==null)t+=p;}return t;}
-function scColor(s,p){if(!s)return"#888";var d=s-p;return d<=-2?"#c8a000":d===-1?"#2a6a2a":d===0?"#1a4a8a":d===1?"#8a4a0a":"#8a1a1a";}
 function scBg(s,p){if(!s)return"#888";var d=s-p;return d<=-2?"#f0c330":d===-1?"#3ddc84":d===0?"#7ec8e3":d===1?"#f7a35c":"#e05252";}
 function scLabel(s,p){if(!s)return"";var d=s-p;return d<=-2?"Eagle 🦅":d===-1?"Birdie 🐦":d===0?"Par ✓":d===1?"Bogey":d===2?"Dubbel":"+"+d;}
+function scColor(s,p){if(!s)return"#888";var d=s-p;return d<=-2?"#c8a000":d===-1?"#2a6a2a":d===0?"#1a4a8a":d===1?"#8a4a0a":"#8a1a1a";}
 function runDiff(){var d=0;for(var i=0;i<18;i++)if(SC[i]>0)d+=SC[i]-H[i].p;return d;}
 function scored(){return SC.filter(function(s){return s>0;}).length;}
 
 // ── SVG ───────────────────────────────────────────────────────────────────────
-function svgHole(h){
+function svgHole(h,zones){
   var W=220,H2=200,sh=SHAPES[h.n]||"st";
   var C={
     st:{fw:"M 88,190 Q 84,145 88,90 Q 92,58 110,38 Q 128,58 132,90 Q 136,145 132,190 Z",t:[110,182],g:[110,42],wp:h.w?"M 85,118 Q 110,106 135,118 Q 135,130 110,134 Q 85,130 85,118 Z":null,bp:h.b?["M 70,54 Q 82,46 92,55 Q 90,66 78,64 Z","M 128,54 Q 140,46 150,55 Q 148,66 136,64 Z"]:[]},
@@ -584,136 +654,140 @@ function svgHole(h){
     sn:{fw:"M 92,190 Q 89,148 92,90 Q 95,58 110,38 Q 125,58 128,90 Q 131,148 128,190 Z",t:[110,182],g:[110,42],wp:null,bp:h.b?["M 74,92 Q 86,84 94,93 Q 92,104 80,102 Z"]:[]}
   };
   var c=C[sh]||C.st;
-  var pid="sv"+h.n;
-  var s='<svg viewBox="0 0 '+W+' '+H2+'" style="width:100%;max-height:180px;display:block;border-radius:10px">';
-  s+='<defs><pattern id="'+pid+'" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r=".7" fill="#c8e0b0" opacity=".4"/></pattern></defs>';
-  s+='<rect width="'+W+'" height="'+H2+'" fill="#e8f5e0" rx="10"/>';
-  s+='<rect width="'+W+'" height="'+H2+'" fill="url(#'+pid+')" rx="10"/>';
+  var pid="p"+h.n;
+  var s='<svg viewBox="0 0 '+W+' '+H2+'" style="width:100%;max-height:185px;display:block;border-radius:10px">';
+  s+='<defs><pattern id="'+pid+'" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r=".7" fill="#c8e0b0" opacity=".4"/></pattern>';
+  s+='<radialGradient id="zg'+h.n+'" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d4a017" stop-opacity="0.5"/><stop offset="100%" stop-color="#d4a017" stop-opacity="0"/></radialGradient></defs>';
+  s+='<rect width="'+W+'" height="'+H2+'" fill="#e8f5e0" rx="10"/><rect width="'+W+'" height="'+H2+'" fill="url(#'+pid+')" rx="10"/>';
   s+='<path d="'+c.fw+'" fill="#5aaa3a" opacity="0.9"/>';
   if(c.wp){s+='<path d="'+c.wp+'" fill="#4a90d0" opacity="0.8"/><path d="'+c.wp+'" fill="none" stroke="#6ab0f0" stroke-width="1" opacity="0.6"/>';}
   c.bp.forEach(function(p){s+='<path d="'+p+'" fill="#e8d070" opacity="0.9" stroke="#c8b040" stroke-width=".5"/>';});
-  if(c.ar)s+='<polyline points="'+c.ar+'" fill="none" stroke="#d4a017" stroke-width="2" stroke-dasharray="5,4" opacity="0.8"/>';
+  if(c.ar)s+='<polyline points="'+c.ar+'" fill="none" stroke="#d4a017" stroke-width="2" stroke-dasharray="5,4" opacity="0.7"/>';
+  // Landing zones
+  if(zones&&zones.length>0){
+    zones.forEach(function(z,i){
+      var alpha=i===ACTIEVE_SLAG?1:0.3;
+      s+='<circle cx="'+z[0]+'" cy="'+z[1]+'" r="20" fill="url(#zg'+h.n+')" opacity="'+alpha+'"/>';
+      s+='<circle cx="'+z[0]+'" cy="'+z[1]+'" r="7" fill="#d4a017" opacity="'+(alpha*0.6)+'"/>';
+      s+='<circle cx="'+z[0]+'" cy="'+z[1]+'" r="3" fill="#d4a017" opacity="'+(alpha)+'" />';
+      if(i===ACTIEVE_SLAG){s+='<rect x="'+(z[0]+8)+'" y="'+(z[1]-10)+'" width="'+(z[2]?z[2].length*5+8:40)+'" height="16" rx="8" fill="#d4a017"/>';s+='<text x="'+(z[0]+12)+'" y="'+(z[1]+2)+'" font-size="8" fill="#0a1a0a" font-weight="bold">'+(z[2]||"")+'</text>';}
+    });
+  }
   s+='<ellipse cx="'+c.g[0]+'" cy="'+c.g[1]+'" rx="16" ry="10" fill="#3ddc84" opacity="0.95" stroke="#2a9a5a" stroke-width="1"/>';
   s+='<line x1="'+c.g[0]+'" y1="'+(c.g[1]-10)+'" x2="'+c.g[0]+'" y2="'+(c.g[1]-22)+'" stroke="#1a1a1a" stroke-width="1.5"/>';
   s+='<polygon points="'+c.g[0]+','+(c.g[1]-22)+' '+(c.g[0]+10)+','+(c.g[1]-17)+' '+c.g[0]+','+(c.g[1]-12)+'" fill="#e05252"/>';
   s+='<rect x="'+(c.t[0]-8)+'" y="'+(c.t[1]-5)+'" width="16" height="8" rx="3" fill="#1a4a1a" opacity="0.9"/>';
   s+='<text x="'+c.t[0]+'" y="'+(c.t[1]+1)+'" text-anchor="middle" font-size="5.5" fill="#e8d080" font-weight="bold">TEE</text>';
-  var lx=8,ly=H2-8;
-  if(h.w){s+='<circle cx="'+(lx+4)+'" cy="'+ly+'" r="5" fill="#4a90d0" opacity="0.8"/><text x="'+(lx+12)+'" y="'+(ly+4)+'" font-size="8" fill="#1a4a8a" font-weight="600">Water</text>';lx+=55;}
-  if(h.b){s+='<circle cx="'+(lx+4)+'" cy="'+ly+'" r="5" fill="#e8d070" stroke="#c8b040" stroke-width=".5"/><text x="'+(lx+12)+'" y="'+(ly+4)+'" font-size="8" fill="#8a7a0a" font-weight="600">Bunker</text>';lx+=58;}
-  if(h.ob){s+='<rect x="'+lx+'" y="'+(ly-6)+'" width="8" height="8" fill="none" stroke="#e05252" stroke-width="1.5"/><text x="'+(lx+12)+'" y="'+(ly+4)+'" font-size="8" fill="#c03030" font-weight="600">OB</text>';}
+  var lx=8;
+  if(h.w){s+='<circle cx="'+(lx+4)+'" cy="192" r="5" fill="#4a90d0" opacity="0.8"/><text x="'+(lx+12)+'" y="196" font-size="8" fill="#1a4a8a" font-weight="600">Water</text>';lx+=55;}
+  if(h.b){s+='<circle cx="'+(lx+4)+'" cy="192" r="5" fill="#e8d070" stroke="#c8b040" stroke-width=".5"/><text x="'+(lx+12)+'" y="196" font-size="8" fill="#8a7a0a" font-weight="600">Bunker</text>';lx+=58;}
+  if(h.ob){s+='<rect x="'+lx+'" y="188" width="8" height="8" fill="none" stroke="#e05252" stroke-width="1.5"/><text x="'+(lx+12)+'" y="196" font-size="8" fill="#c03030" font-weight="600">OB</text>';}
   s+='</svg>';
   return s;
 }
 
+// Landing zone coordinaten per hole shape
+var ZONE_COORDS={
+  st:  [[110,160],[110,100],[110,60]],
+  dl:  [[92,130],[80,80],[66,42]],
+  dr:  [[112,148],[132,100],[158,38]],
+  drs: [[106,148],[116,90],[128,38]],
+  sn:  [[110,155],[110,100],[110,60]]
+};
+
 // ── CADDIE ENGINE ─────────────────────────────────────────────────────────────
-function situatieAdvies(){
-  var sc2=scored(), rd=runDiff(), h=H[CUR];
-  if(sc2===0) return "Eerste hole — speel je eigen spel, focus op de fairway.";
-  if(sc2<4) return "Begin van de ronde — rustig opstarten, vermijd grote fouten.";
-  var gemPerHole = rd/sc2;
-  if(CUR>=9 && rd<=-3) return "Je speelt geweldig! Blijf aanvallend op de achterkant.";
-  if(CUR>=9 && rd>=5) return "Achterkant begonnen — fris begin, laat de voorkant achter je.";
-  if(gemPerHole>1.5) return "Speel conservatief — vermijd OB en water, bogeys zijn prima.";
-  if(gemPerHole<0) return "Je speelt onder par — vertrouw je spel en blijf het doen.";
-  if(h.si<=4) return "Moeilijkste holes van de baan — SI "+h.si+". Bogey is hier een goed resultaat.";
-  if(h.si>=15) return "Makkelijke hole (SI "+h.si+") — kans op een goede score hier.";
-  return "Goed op dreef — speel je eigen spel.";
+function getCaddieText(holeN){
+  var t=CADDIE_TEKSTEN[holeN];
+  if(!t) return "Speel je eigen spel. Eén slag tegelijk.";
+  var sleutels={kort:"kort",cons:"cons",gebA:"gebA",agressief:"agressief"};
+  var sleutel=sleutels[STIJL]||"cons";
+  var tekst=t[sleutel]||t["cons"]||"Speel je eigen spel.";
+  // Situatie aanpassing
+  var rd=runDiff(),sc2=scored(),h=H[holeN-1];
+  if(sc2>=4 && rd<=-3) tekst=tekst+" Je speelt geweldig vandaag — vertrouw je spel.";
+  else if(sc2>=4 && rd>=6) tekst=tekst+" Laat de vorige holes achter je. Focus op deze hole.";
+  else if(h.si<=3) tekst=tekst+" Dit is één van de zwaarste holes van de baan — bogey is hier een prima score.";
+  else if(h.si>=16) tekst=tekst+" Makkelijke hole — pak hier je score.";
+  return tekst;
 }
 
-function bouwPlan(h){
-  var dist=tdist(h), adj=wadj(dist);
-  var drv=CLUBS[0], drvAdj=wadj(drv.d);
-  var plan=[], risico=[];
+function situatieTekst(){
+  var sc2=scored(),rd=runDiff();
+  if(sc2===0) return "";
+  if(CUR===9) return rd<0?" Je hebt een geweldige voorkant gespeeld. Blijf dit doen.":" Achterkant begint — fris begin, nieuwe kansen.";
+  return "";
+}
+
+function bouwSlagen(h){
+  var dist=tdist(h),adj=wadj(dist),drv=CLUBS[0],drvAdj=wadj(drv.d);
+  var slagen=[];
+  var maxClubDist=CLUBS[0].d;
+  var isKort=STIJL==="kort"&&maxClubDist<=150;
 
   if(h.p===3){
     var c=bestClub(adj);
-    var cVeilig=bestClub(Math.round(adj*0.95));
-    plan.push({
-      nr:1,lbl:"Tee shot",
-      veilig:{club:cVeilig?cVeilig.nm:"—",dist:cVeilig?cVeilig.d:adj,rest:0,tip:"Midden green, vermijd alles rondom"},
-      slim:{club:c?c.nm:"—",dist:c?c.d:adj,rest:0,tip:h.ob?"Weg van OB, midden green":"Midden green aanspelen"},
-      agressief:{club:c?c.nm:"—",dist:adj,rest:0,tip:"Direct op de pin gaan"}
-    });
-    plan.push({nr:2,lbl:"Putt",veilig:{club:"Putter",dist:0,rest:0,tip:"2 putten voor par"},slim:{club:"Putter",dist:0,rest:0,tip:"Lees de lijn goed"},agressief:{club:"Putter",dist:0,rest:0,tip:"1 putt voor birdie"}});
-    if(h.w) risico.push({icon:"💧",txt:"Water rondom — neem liever te veel club"});
-    if(h.ob) risico.push({icon:"⛔",txt:"OB "+h.ob+" — mis aan de veilige kant"});
-    if(h.b) risico.push({icon:"⚠️",txt:"Bunkers — speel naar het grote deel"});
+    slagen.push({nr:1,lbl:"Tee shot",club:c?c.nm:"—",carry:c?c.d:adj,rest:0,tip:h.ob?"Weg van OB, midden green":"Midden green, vertrouw je swing"});
+    slagen.push({nr:2,lbl:"Putt",club:"Putter",carry:0,rest:0,tip:"Lees de lijn, twee putten is prima"});
   } else if(h.p===4){
-    var drvVeilig=clubOnder(Math.round(adj*0.6));
-    var drvSlim=drv;
-    var restVeilig=Math.max(0,adj-drvVeilig.d);
-    var restSlim=Math.max(0,adj-drvAdj);
-    var insVeilig=bestClub(restVeilig);
-    var insSlim=bestClub(restSlim);
-    plan.push({
-      nr:1,lbl:"Drive",
-      veilig:{club:drvVeilig.nm,dist:drvVeilig.d,rest:Math.round(restVeilig),tip:"Veilig op fairway — "+Math.round(restVeilig)+"m over voor inslag"},
-      slim:{club:drvSlim.nm,dist:drvAdj,rest:Math.round(restSlim),tip:"Beste positie — "+Math.round(restSlim)+"m over voor inslag"},
-      agressief:{club:drvSlim.nm,dist:drvAdj,rest:Math.round(restSlim),tip:"Vol uitslaan — "+Math.round(restSlim)+"m voor inslag"}
-    });
-    plan.push({
-      nr:2,lbl:"Inslag",
-      veilig:{club:insVeilig?insVeilig.nm:"—",dist:insVeilig?insVeilig.d:0,rest:0,tip:"Midden green — "+Math.round(restVeilig)+"m"},
-      slim:{club:insSlim?insSlim.nm:"—",dist:insSlim?insSlim.d:0,rest:0,tip:"Midden green aanspelen — "+Math.round(restSlim)+"m"},
-      agressief:{club:insSlim?insSlim.nm:"—",dist:insSlim?insSlim.d:0,rest:0,tip:"Aanvallend op de pin — "+Math.round(restSlim)+"m"}
-    });
-    plan.push({nr:3,lbl:"Putt",veilig:{club:"Putter",dist:0,rest:0,tip:"2 putten voor bogey/par"},slim:{club:"Putter",dist:0,rest:0,tip:"Lees de lijn"},agressief:{club:"Putter",dist:0,rest:0,tip:"1 putt voor birdie"}});
-    if(h.w) risico.push({icon:"💧",txt:"Water bij "+(h.wpos||"hole")+" — ken je afstand"});
-    if(h.ob) risico.push({icon:"⛔",txt:"OB "+h.ob+" — vermijd straf"});
-    if(h.b) risico.push({icon:"⚠️",txt:"Bunkers — mis aan de ruime kant"});
+    var driveClub, driveDist;
+    if(isKort||STIJL==="cons"){driveClub=clubOnder(adj*0.55)||drv;driveDist=driveClub.d;}
+    else{driveClub=drv;driveDist=drvAdj;}
+    var rest=Math.max(0,adj-driveDist);
+    var insClub=bestClub(rest);
+    slagen.push({nr:1,lbl:"Drive",club:driveClub.nm,carry:driveDist,rest:Math.round(rest),tip:h.ob?"Weg van OB — "+h.ob:"Speel naar de fairway, positie kiezen"});
+    slagen.push({nr:2,lbl:"Inslag",club:insClub?insClub.nm:"—",carry:insClub?insClub.d:0,rest:0,tip:DOEL==="birdie"?"Aanvallend op de pin":"Midden green aanspelen"});
+    slagen.push({nr:3,lbl:"Putt",club:"Putter",carry:0,rest:0,tip:"Twee putten is het doel"});
   } else {
-    var canR2=drvAdj*2>=adj*0.9;
-    var r1=Math.max(0,adj-drvAdj);
-    var l1=Math.min(r1,drv.d), r2=Math.max(0,r1-l1);
-    var l1c=bestClub(l1), r2c=bestClub(r2), r1c=bestClub(r1);
-    plan.push({
-      nr:1,lbl:"Drive",
-      veilig:{club:drv.nm,dist:drvAdj,rest:Math.round(r1),tip:"Veilig op fairway — "+Math.round(r1)+"m over"},
-      slim:{club:drv.nm,dist:drvAdj,rest:Math.round(r1),tip:"Positie kiezen — "+Math.round(r1)+"m over"},
-      agressief:{club:drv.nm,dist:drvAdj,rest:Math.round(r1),tip:"Max afstand — "+Math.round(r1)+"m over"}
-    });
-    if(canR2 && DOEL==="birdie"){
-      plan.push({nr:2,lbl:"2e slag (op green)",veilig:{club:l1c?l1c.nm:"—",dist:l1c?l1c.d:0,rest:Math.round(r2),tip:"Lay-up voor goede positie"},slim:{club:r1c?r1c.nm:"—",dist:r1c?r1c.d:0,rest:0,tip:"Green halen in 2 — "+Math.round(r1)+"m"},agressief:{club:r1c?r1c.nm:"—",dist:r1c?r1c.d:0,rest:0,tip:"Green halen in 2 voor eagle/birdie"}});
-    } else {
-      plan.push({nr:2,lbl:"2e slag",veilig:{club:l1c?l1c.nm:"—",dist:l1c?l1c.d:0,rest:Math.round(r2),tip:"Rustig opbouwen — "+Math.round(r2)+"m over"},slim:{club:l1c?l1c.nm:"—",dist:l1c?l1c.d:0,rest:Math.round(r2),tip:"Positie voor inslag — "+Math.round(r2)+"m over"},agressief:{club:r1c?r1c.nm:"—",dist:r1c?r1c.d:0,rest:0,tip:"Probeer green te halen"}});
-      plan.push({nr:3,lbl:"Inslag",veilig:{club:r2c?r2c.nm:"—",dist:r2c?r2c.d:0,rest:0,tip:"Op of bij green — "+Math.round(r2)+"m"},slim:{club:r2c?r2c.nm:"—",dist:r2c?r2c.d:0,rest:0,tip:"Midden green — "+Math.round(r2)+"m"},agressief:{club:r2c?r2c.nm:"—",dist:r2c?r2c.d:0,rest:0,tip:"Aanvallend op pin"}});
-    }
-    plan.push({nr:plan.length+1,lbl:"Putt",veilig:{club:"Putter",dist:0,rest:0,tip:"2 putten voor bogey"},slim:{club:"Putter",dist:0,rest:0,tip:"2 putten voor par"},agressief:{club:"Putter",dist:0,rest:0,tip:"1 putt voor birdie"}});
-    if(h.w) risico.push({icon:"💧",txt:"Water bij "+(h.wpos||"hole")+" — lay-up als twijfel"});
-    if(h.b) risico.push({icon:"⚠️",txt:"Bunkers — mis aan de ruime kant"});
+    var s1=drv,s1d=drvAdj;
+    if(isKort){s1=clubOnder(adj*0.35)||drv;s1d=s1.d;}
+    var r1=Math.max(0,adj-s1d);
+    var l1d=Math.min(r1,STIJL==="agressief"&&!isKort?drvAdj:clubOnder(r1*0.6).d);
+    var l1c=bestClub(l1d);
+    var r2=Math.max(0,r1-l1d);
+    var r2c=bestClub(r2);
+    slagen.push({nr:1,lbl:"Drive",club:s1.nm,carry:s1d,rest:Math.round(r1),tip:"Veilig op de fairway — "+Math.round(r1)+"m over"});
+    slagen.push({nr:2,lbl:"2e slag",club:l1c?l1c.nm:"—",carry:l1c?l1c.d:0,rest:Math.round(r2),tip:h.w?"Stop vóór het water — "+Math.round(r2)+"m over":"Opbouwen richting green — "+Math.round(r2)+"m over"});
+    slagen.push({nr:3,lbl:"Inslag",club:r2c?r2c.nm:"—",carry:r2c?r2c.d:0,rest:0,tip:DOEL==="birdie"?"Aanvallend op de pin":"Midden green, solide swing"});
+    slagen.push({nr:4,lbl:"Putt",club:"Putter",carry:0,rest:0,tip:"Twee putten voor par/bogey"});
   }
-  return{plan:plan,risico:risico};
+  return slagen;
+}
+
+function bouwRisico(h){
+  var r=[];
+  if(h.w) r.push({i:"💧",t:"Water bij "+(h.ob||"de hole")+" — ken je carry-afstand"});
+  if(h.ob) r.push({i:"⛔",t:"OB "+h.ob+" — straf vermijden is altijd de slimste zet"});
+  if(h.b) r.push({i:"⚠️",t:"Bunkers aanwezig — speel naar het ruime deel van de green"});
+  return r;
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
 function renderHole(){
-  var h=H[CUR], dist=tdist(h), adj=wadj(dist), stab=stabTot();
-  var rd=runDiff(), sc2=scored();
-  var doelPH=DOEL==="birdie"?h.p-1:DOEL==="par"?h.p:h.p+1;
-  var doelNm=doelPH<h.p?"🦅 Birdie":doelPH===h.p?"⭐ Par":"🎯 Bogey";
+  var h=H[CUR],dist=tdist(h),adj=wadj(dist),stab=stabTot();
+  var rd=runDiff(),sc2=scored();
 
   // Live bar
-  var liveStr=sc2>0?(rd===0?"E":rd>0?"+"+rd:rd)+" · H"+(CUR+1):"H"+(CUR+1)+" · Start";
-  var liveCol=rd<0?"#3ddc84":rd>0?"#f7a35c":"#e8d080";
+  var liveStr=sc2>0?(rd===0?"E":rd>0?"+"+rd:rd)+" · H"+(CUR+1):"H"+(CUR+1);
   document.getElementById("live-info").textContent=liveStr;
-  document.getElementById("live-info").style.color=liveCol;
+  document.getElementById("live-info").style.color=rd<0?"#3ddc84":rd>0?"#f7a35c":"#e8d080";
 
-  // Hero
-  document.getElementById("hero-bg-num").textContent=h.n;
-  document.getElementById("h-nr").textContent=h.n;
-  document.getElementById("h-doel").textContent=doelNm;
-  document.getElementById("h-doel").style.color=DC[DOEL].border;
-  document.getElementById("h-dist").textContent=adj;
+  // Hole hero
+  ["hero-bg","caddie-bg"].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=h.n;});
+  ["h-nr","caddie-nr"].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=h.n;});
+  ["h-dist","caddie-dist"].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=adj;});
 
-  // Chips
+  var doelNm=DC[DOEL].i+" "+(DOEL==="birdie"?"Birdie":DOEL==="par"?"Par":"Bogey")+" doel";
+  ["h-doel-lbl","caddie-doel-lbl"].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){el.textContent=doelNm;el.style.color=DC[DOEL].bc;}
+  });
+
   var chips='<div class="hole-chip">Par <b>'+h.p+'</b></div>';
   chips+='<div class="hole-chip">SI <b>'+h.si+'</b></div>';
-  chips+='<div class="hole-chip" style="background:'+DC[DOEL].bg+'44;border-color:'+DC[DOEL].border+'44;color:'+DC[DOEL].border+'">'+DC[DOEL].i+' '+DC[DOEL].l+'</div>';
-  if(sc2>0) chips+='<div class="hole-chip'+(rd>2?" warn":"")+'">'+(rd===0?"Level par":rd>0?"+"+rd+" stand":rd+" stand")+'</div>';
-  document.getElementById("h-chips").innerHTML=chips;
+  chips+='<div class="hole-chip" style="background:'+DC[DOEL].bg+'44;border-color:'+DC[DOEL].bc+'44;color:'+DC[DOEL].bc+'">'+DC[DOEL].i+' '+DC[DOEL].l+'</div>';
+  if(sc2>0) chips+='<div class="hole-chip'+(rd>3?" warn":"")+'">'+(rd===0?"Level par":rd>0?"+"+rd:rd)+'</div>';
+  ["h-chips","caddie-chips"].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=chips;});
 
-  // Nav
   document.getElementById("prev-btn").disabled=CUR===0;
   document.getElementById("next-btn").disabled=CUR===17;
   document.getElementById("next-hole-btn").style.display=CUR===17?"none":"block";
@@ -721,59 +795,14 @@ function renderHole(){
   // Dots
   var dots="";
   for(var i=0;i<18;i++){
-    var sc=SC[i],hh=H[i];
-    var cl="dot";
-    if(i===CUR) cl+=" on";
-    else if(sc>0) cl+=sc-hh.p>0?" over":" done";
+    var cl="dot"+(i===CUR?" on":"")+(SC[i]>0?(SC[i]-H[i].p>0?" over":" done"):"");
     dots+='<span class="'+cl+'" onclick="sprong('+i+')">'+(i+1)+'</span>';
   }
   document.getElementById("dots").innerHTML=dots;
 
-  // SVG
-  document.getElementById("hole-svg").innerHTML=svgHole(h);
-
-  // Caddie
-  document.getElementById("caddie-situatie").innerHTML='<div class="caddie-situation">'+situatieAdvies()+'<br><span style="font-size:11px;color:#5a7a5a">'+h.gt+'</span></div>';
-
-  var gp=bouwPlan(h);
-  var optHtml="";
-  var opties=[
-    {k:"veilig",icon:"🛡️",nm:"Veilig",tag:"tag-veilig"},
-    {k:"slim",icon:"⭐",nm:"Slim",tag:"tag-slim"},
-    {k:"agressief",icon:"🔥",nm:"Agressief",tag:"tag-agressief"}
-  ];
-  var eersteslag=gp.plan[0];
-  opties.forEach(function(opt){
-    var s=eersteslag[opt.k];
-    var isSel=(DOEL==="bogey"&&opt.k==="veilig")||(DOEL==="par"&&opt.k==="slim")||(DOEL==="birdie"&&opt.k==="agressief");
-    optHtml+='<div class="club-opt'+(opt.k==="agressief"?" agressief":"")+(isSel?" selected":"")+'">';
-    optHtml+='<div class="club-opt-icon">'+opt.icon+'</div>';
-    optHtml+='<div class="club-opt-info"><div class="club-opt-name">'+s.club+'</div><div class="club-opt-detail">'+s.dist+'m carry'+( s.rest>0?' · dan nog ~'+s.rest+'m over':'')+' · '+s.tip+'</div></div>';
-    optHtml+='<div class="club-opt-tag '+opt.tag+'">'+opt.nm+'</div></div>';
-  });
-  document.getElementById("caddie-opties").innerHTML=optHtml;
-
-  // Spelplan
-  var planHtml='<div style="margin-top:14px"><div class="card-title">Volledig spelplan</div>';
-  gp.plan.forEach(function(slag,idx){
-    var gekozen=DOEL==="bogey"?slag.veilig:DOEL==="par"?slag.slim:slag.agressief;
-    var isFirst=idx===0, isLast=idx===gp.plan.length-1;
-    planHtml+='<div class="slag-item">';
-    planHtml+='<div class="slag-num" style="'+(isFirst?"background:#1a4a1a":isLast?"background:#3ddc84;color:#0a2a0a":"background:#8a9a8a")+'">'+slag.nr+'</div>';
-    planHtml+='<div class="slag-body">';
-    planHtml+='<div class="slag-header"><span class="slag-lbl">'+slag.lbl+'</span>';
-    if(gekozen.club!=="Putter"&&gekozen.club!=="Wedge/putter") planHtml+='<span class="slag-club">'+gekozen.club+'</span>';
-    else planHtml+='<span class="slag-club" style="color:#5a8a5a">'+gekozen.club+'</span>';
-    planHtml+='</div>';
-    if(gekozen.dist>0) planHtml+='<div class="slag-dist">'+gekozen.dist+'m carry'+(gekozen.rest>0?' <span style="color:#8a7a5a">→ nog ~'+gekozen.rest+'m</span>':'')+'</div>';
-    planHtml+='<div class="slag-tip">📍 '+gekozen.tip+'</div>';
-    planHtml+='</div></div>';
-  });
-  gp.risico.forEach(function(r){
-    planHtml+='<div class="risico-item"><span>'+r.icon+'</span><span>'+r.txt+'</span></div>';
-  });
-  planHtml+='</div>';
-  document.getElementById("caddie-plan").innerHTML=planHtml;
+  // SVG hole tab
+  document.getElementById("hole-svg").innerHTML=svgHole(h,[]);
+  document.getElementById("hole-desc").textContent=h.desc||"";
 
   // Score
   var sc=SC[CUR],sp=stabP(CUR);
@@ -796,11 +825,64 @@ function renderHole(){
   var lp=document.getElementById("lopend");
   if(sc2>0){
     lp.style.display="flex";
-    document.getElementById("lopend-lbl").textContent="Na "+sc2+" holes · "+stabTot()+" stableford";
+    document.getElementById("lopend-lbl").textContent="Na "+sc2+" holes · "+stab+" stableford";
     var lv=document.getElementById("lopend-val");
     lv.textContent=rd===0?"Level par":rd>0?"+"+rd:rd;
     lv.style.color=rd===0?"#1a4a8a":rd<0?"#1a6a1a":"#8a4a0a";
   } else lp.style.display="none";
+
+  // Caddie tab
+  renderCaddie(h,adj);
+}
+
+function renderCaddie(h,adj){
+  // Speech
+  var tekst=getCaddieText(h.n);
+  var sitTekst=situatieTekst();
+  if(sitTekst) tekst=sitTekst+" "+tekst;
+  document.getElementById("caddie-speech").innerHTML=tekst;
+
+  // Map met landing zones
+  var sh=SHAPES[h.n]||"st";
+  var zc=ZONE_COORDS[sh]||ZONE_COORDS.st;
+  var slagen=bouwSlagen(h);
+  var numZones=Math.min(slagen.filter(function(s){return s.club!=="Putter";}).length,zc.length);
+  var zones=[];
+  for(var i=0;i<numZones;i++){
+    var s=slagen[i];
+    zones.push([zc[i][0],zc[i][1],s.club+" · "+s.carry+"m"]);
+  }
+  document.getElementById("caddie-map").innerHTML=svgHole(h,zones);
+
+  // Map tabs
+  var tabHtml="";
+  for(var j=0;j<numZones;j++){
+    tabHtml+='<div class="map-tab'+(j===ACTIEVE_SLAG?" on":"")+'" onclick="setActieveSlag('+j+')">'+slagen[j].nr+'</div>';
+  }
+  document.getElementById("map-tabs").innerHTML=tabHtml;
+
+  // Slag kaarten
+  var sHtml="";
+  slagen.forEach(function(s,idx){
+    var isAct=idx===ACTIEVE_SLAG,isPutt=s.club==="Putter";
+    sHtml+='<div class="slag-card'+(isAct?" active":"")+'" onclick="setActieveSlag('+idx+')">';
+    sHtml+='<div class="slag-card-header"><div class="slag-num'+(isPutt?" putt":"")+'">'+s.nr+'</div>';
+    sHtml+='<div class="slag-body-info"><div class="slag-lbl">'+s.lbl+'</div><div class="slag-club-name">'+s.club+'</div>';
+    if(s.carry>0) sHtml+='<div class="slag-dist-info">'+s.carry+'m carry'+(s.rest>0?' <span style="color:#8a7a5a">· nog ~'+s.rest+'m</span>':'')+'</div>';
+    sHtml+='</div></div>';
+    sHtml+='<div class="slag-tip-txt">📍 '+s.tip+'</div>';
+    sHtml+='</div>';
+  });
+  document.getElementById("caddie-slagen").innerHTML=sHtml;
+
+  // Risico
+  var risico=bouwRisico(h);
+  if(risico.length>0){
+    var rHtml='<div class="risico-card">';
+    risico.forEach(function(r){rHtml+='<div class="risico-item"><span>'+r.i+'</span><span>'+r.t+'</span></div>';});
+    rHtml+='</div>';
+    document.getElementById("caddie-risico").innerHTML=rHtml;
+  } else document.getElementById("caddie-risico").innerHTML="";
 }
 
 function renderKaart(){
@@ -811,36 +893,33 @@ function renderKaart(){
   dv.style.color=diff<0?"#1a6a1a":diff>0?"#8a1a1a":"#1a4a8a";
   document.getElementById("tot-stab").textContent=stab;
   document.getElementById("tot-putts").textContent=putts||"—";
-
   var ss=document.getElementById("stat-sum");
   if(sc2>0){
     ss.style.display="block";
-    var fw=ST.filter(function(s){return s.fw==="hit";}).length;
+    var fw2=ST.filter(function(s){return s.fw==="hit";}).length;
     var fwt=H.filter(function(h){return h.p>3;}).length;
     var gir=ST.filter(function(s){return s.gir===true;}).length;
     var avg=putts>0?(putts/sc2).toFixed(1):"—";
     document.getElementById("stat-sum-content").innerHTML=
-      '<div class="stat-sum-box"><div style="font-size:18px;font-weight:700;color:#1a4a1a">'+fw+'/'+fwt+'</div><div style="font-size:8px;color:#8a7a5a;text-transform:uppercase;letter-spacing:1px;margin-top:2px">Fairways</div></div>'+
-      '<div class="stat-sum-box"><div style="font-size:18px;font-weight:700;color:#1a4a1a">'+gir+'/18</div><div style="font-size:8px;color:#8a7a5a;text-transform:uppercase;letter-spacing:1px;margin-top:2px">GIR</div></div>'+
-      '<div class="stat-sum-box"><div style="font-size:18px;font-weight:700;color:#1a4a1a">'+avg+'</div><div style="font-size:8px;color:#8a7a5a;text-transform:uppercase;letter-spacing:1px;margin-top:2px">Avg Putts</div></div>';
+      '<div style="background:#f5f0e8;border-radius:8px;padding:8px 4px;text-align:center"><div style="font-size:18px;font-weight:700;color:#1a4a1a">'+fw2+'/'+fwt+'</div><div style="font-size:8px;color:#8a7a5a;text-transform:uppercase;letter-spacing:1px;margin-top:2px">Fairways</div></div>'+
+      '<div style="background:#f5f0e8;border-radius:8px;padding:8px 4px;text-align:center"><div style="font-size:18px;font-weight:700;color:#1a4a1a">'+gir+'/18</div><div style="font-size:8px;color:#8a7a5a;text-transform:uppercase;letter-spacing:1px;margin-top:2px">GIR</div></div>'+
+      '<div style="background:#f5f0e8;border-radius:8px;padding:8px 4px;text-align:center"><div style="font-size:18px;font-weight:700;color:#1a4a1a">'+avg+'</div><div style="font-size:8px;color:#8a7a5a;text-transform:uppercase;letter-spacing:1px;margin-top:2px">Avg Putts</div></div>';
   } else ss.style.display="none";
-
   var tc=TC[TEE];
   var html='<thead><tr><th>H</th><th>Par</th><th style="color:'+tc+'">m</th><th>Score</th><th>+/-</th><th>Stbfd</th><th>Putts</th></tr></thead><tbody>';
-  var parHalves=[35,34];
   [0,1].forEach(function(half){
     var ps=0,bs=0,ss2=0,pts=0;
     H.slice(half*9,(half+1)*9).forEach(function(h,j){
       var i=half*9+j,sc=SC[i],sp=stabP(i),d=sc?sc-h.p:null;
       ps+=h.p;bs+=sc;if(sp!==null)ss2+=sp;pts+=ST[i].pt||0;
       var dot=sc?'<span class="sdot" style="background:'+scBg(sc,h.p)+'">'+sc+'</span>':"—";
-      html+='<tr onclick="sprong('+i+');toonTab(\'hole\',null)"><td style="color:#5a8a5a;font-weight:600">'+h.n+'</td><td>'+h.p+'</td><td style="color:'+tc+';font-size:9px">'+tdist(h)+'</td><td>'+dot+'</td><td style="font-size:10px;color:'+(sc?scColor(sc,h.p):"#aaa")+'">'+(sc?(d===0?"E":d>0?"+"+d:d):"")+'</td><td style="color:#1a4a1a;font-weight:600">'+(sp!==null?sp:"—")+'</td><td style="color:#5a7a5a">'+(ST[i].pt||"—")+'</td></tr>';
+      html+='<tr onclick="sprong('+i+');toonTab(\'hole\',null)"><td style="color:#5a8a5a;font-weight:600">'+h.n+'</td><td>'+h.p+'</td><td style="color:'+tc+';font-size:9px">'+tdist(h)+'</td><td>'+dot+'</td><td style="font-size:9px;color:'+(sc?scColor(sc,h.p):"#aaa")+'">'+(sc?(d===0?"E":d>0?"+"+d:d):"")+'</td><td style="color:#1a4a1a;font-weight:600">'+(sp!==null?sp:"—")+'</td><td style="color:#5a7a5a">'+(ST[i].pt||"—")+'</td></tr>';
     });
-    var hd=bs-parHalves[half];
+    var hd=bs-(half===0?35:34);
     html+='<tr class="sub"><td colspan="2">'+(half===0?"OUT":"IN")+'</td><td style="color:'+tc+';font-size:9px">'+H.slice(half*9,(half+1)*9).reduce(function(a,h){return a+tdist(h);},0)+'</td><td>'+(bs||"—")+'</td><td style="font-size:9px">'+(bs?(hd===0?"E":hd>0?"+"+hd:hd):"")+'</td><td>'+ss2+'</td><td>'+(pts||"—")+'</td></tr>';
   });
-  var td=H.reduce(function(a,h){return a+tdist(h);},0);
-  html+='<tr class="tot"><td colspan="2">TOT</td><td style="font-size:9px">'+td+'</td><td>'+(bruto||"—")+'</td><td>'+(sc2?(diff===0?"E":diff>0?"+"+diff:diff):"")+'</td><td>'+stab+'</td><td>'+(putts||"—")+'</td></tr></tbody>';
+  var td=H.reduce(function(a,h){return a+tdist(h);},0),diff2=runDiff();
+  html+='<tr class="tot"><td colspan="2">TOT</td><td style="font-size:9px">'+td+'</td><td style="color:#1a4a1a">'+(bruto||"—")+'</td><td style="color:'+(diff2<0?"#1a6a1a":diff2>0?"#8a1a1a":"#1a4a8a")+'">'+(sc2?(diff2===0?"E":diff2>0?"+"+diff2:diff2):"")+'</td><td style="color:#1a4a1a">'+stab+'</td><td>'+(putts||"—")+'</td></tr></tbody>';
   document.getElementById("kaart-tbl").innerHTML=html;
 }
 
@@ -853,23 +932,30 @@ function renderWind(){
   if(WS===0){document.getElementById("wind-lijst").innerHTML='<div style="font-size:12px;color:#8a7a5a;font-style:italic">Stel windkracht in om het effect te zien.</div>';return;}
   var html2="";
   H.forEach(function(h){
-    var raw=tdist(h),adj=wadj(raw),diff=adj-raw,cl=bestClub(adj);
+    var raw=tdist(h),adj=wadj(raw),diff=adj-raw,cl=bestClubAll(adj);
     html2+='<div class="wind-row"><span style="color:#5a8a5a;font-weight:600;width:24px">H'+h.n+'</span><span style="color:#1a1a1a">'+raw+'m</span><span style="color:'+(diff>0?"#c03030":"#1a6a1a")+';width:48px;text-align:center;font-weight:600">'+(diff>0?"+":"")+diff+'m</span><span style="color:#1a4a1a;font-weight:700;width:60px;text-align:right">'+(cl?cl.nm:"—")+'</span></div>';
   });
   document.getElementById("wind-lijst").innerHTML=html2;
+}
+
+function renderSetupStijl(containerId){
+  var html="";
+  Object.keys(SC_DATA).forEach(function(k){
+    var v=SC_DATA[k];
+    html+='<div class="stijl-btn'+(STIJL===k?" on":"")+'" onclick="setStijl(\''+k+'\',\''+containerId+'\')"><div class="stijl-icon">'+v.l.split(" ")[0]+'</div><div class="stijl-info"><div class="stijl-name">'+v.l.split(" ").slice(1).join(" ")+'</div><div class="stijl-desc">'+v.desc+'</div></div></div>';
+  });
+  document.getElementById(containerId).innerHTML=html;
 }
 
 function renderDoelKnoppen(id){
   var html="";
   Object.keys(DC).forEach(function(k){
     var v=DC[k];
-    html+='<div class="doel-btn'+(DOEL===k?" on":"")+'" style="'+(DOEL===k?"border-color:"+v.border+";background:"+v.bg:"")+'\" onclick="setDoel(\''+k+'\',\''+id+'\')">';
-    html+='<div class="doel-icon">'+v.i+'</div>';
-    html+='<div class="doel-name" style="'+(DOEL===k?"color:"+v.c:"")+'">'+v.l+'</div>';
-    html+='</div>';
+    html+='<div class="doel-btn'+(DOEL===k?" on":"")+'" style="'+(DOEL===k?"border-color:"+v.bc+";background:"+v.bg:"")+'\" onclick="setDoel(\''+k+'\',\''+id+'\')">';
+    html+='<div class="doel-icon">'+v.i+'</div><div class="doel-name">'+v.l+'</div></div>';
   });
   document.getElementById(id).innerHTML=html;
-  if(id==="setup-doel") document.getElementById("setup-doel-sub").textContent=DC[DOEL].s;
+  if(id==="doel-knoppen") document.getElementById("doel-sub").textContent=DC[DOEL].s;
 }
 
 function renderTeeKnoppen(){
@@ -877,59 +963,104 @@ function renderTeeKnoppen(){
   ["g","o","r"].forEach(function(t){
     html+='<button class="tee-btn'+(TEE===t?" on":"")+'" style="border-color:'+(TEE===t?TC[t]:"#e8e0d0")+';background:'+(TEE===t?TC[t]:"#faf7f0")+';color:'+(TEE===t?"#fff":"#8a7a5a")+'" onclick="setTee(\''+t+'\')">'+TL[t]+'</button>';
   });
-  document.getElementById("setup-tee").innerHTML=html;
+  document.getElementById("tee-knoppen").innerHTML=html;
 }
 
 function renderClubs(){
   var html="";
   CLUBS.forEach(function(c,i){
-    html+='<div class="club-row"><div class="club-name">'+c.nm+'</div>';
+    var isFav=FAV.indexOf(i)>=0;
+    html+='<div class="club-row">';
+    html+='<div class="fav-check'+(isFav?" on":"")+'" onclick="toggleFav('+i+')">'+(isFav?"★":"☆")+'</div>';
+    html+='<div class="club-name" style="margin-left:8px">'+c.nm+'</div>';
     if(EDIT===i){
-      html+='<div style="display:flex;gap:6px;align-items:center"><input type="number" id="ei" value="'+c.d+'" class="club-inp"/><button onclick="saveClub('+i+')" class="club-ok">✓</button><button onclick="cancelEdit()" class="club-x">✕</button></div>';
+      html+='<div style="display:flex;gap:5px;align-items:center"><input type="number" id="ei" value="'+c.d+'" class="club-inp"/><button onclick="saveClub('+i+')" class="club-ok">✓</button><button onclick="cancelEdit()" class="club-x">✕</button></div>';
     } else {
-      html+='<div style="display:flex;align-items:center;gap:10px"><span class="club-dist">'+c.d+'m</span><button class="club-edit-btn" onclick="editClub('+i+')">✎</button></div>';
+      html+='<div style="display:flex;align-items:center;gap:9px"><span class="club-dist-val">'+c.d+'m</span><button class="club-edit-btn" onclick="editClub('+i+')">✎</button></div>';
     }
     html+='</div>';
   });
   document.getElementById("clubs-lijst").innerHTML=html;
+  // Fav lijst
+  var fHtml="";
+  CLUBS.forEach(function(c,i){
+    var isFav=FAV.indexOf(i)>=0;
+    fHtml+='<div class="club-row"><div class="fav-check'+(isFav?" on":"")+'" onclick="toggleFav('+i+')">'+(isFav?"★":"☆")+'</div><div style="flex:1;margin-left:8px;font-size:13px;font-weight:600;color:#1a1a1a">'+c.nm+'</div><div style="font-size:12px;color:#8a7a5a">'+c.d+'m</div></div>';
+  });
+  if(document.getElementById("fav-lijst")) document.getElementById("fav-lijst").innerHTML=fHtml;
+  if(document.getElementById("fav-count")) document.getElementById("fav-count").innerHTML='<b style="color:#1a4a1a">'+FAV.length+'</b> van 4 favorieten gekozen';
+}
+
+function renderSetupSteps(){
+  var html="";
+  for(var i=1;i<=3;i++) html+='<div class="setup-step'+(i===SETUP_STAP?" on":"")+'"></div>';
+  document.getElementById("setup-steps").innerHTML=html;
+}
+
+function renderFinish(){
+  var bruto=SC.reduce(function(a,b){return a+b;},0);
+  var diff=runDiff(),stab=stabTot(),putts=ST.reduce(function(a,s){return a+(s.pt||0);},0);
+  var fw=ST.filter(function(s){return s.fw==="hit";}).length;
+  var gir=ST.filter(function(s){return s.gir===true;}).length;
+  document.getElementById("fin-score").textContent=bruto||"—";
+  var dEl=document.getElementById("fin-diff");
+  dEl.textContent=diff===0?"Level par — geweldig!":diff>0?"+"+diff+" boven par":diff+" onder par 🔥";
+  dEl.style.color=diff<0?"#3ddc84":diff>0?"#f7a35c":"#e8d080";
+  document.getElementById("fin-stab").textContent=stab+" stableford punten";
+  document.getElementById("fin-fw").textContent=fw+"/"+H.filter(function(h){return h.p>3;}).length;
+  document.getElementById("fin-gir").textContent=gir+"/18";
+  document.getElementById("fin-putts").textContent=putts||"—";
+  var caddieEind="";
+  if(diff<=-5) caddieEind="Ongelooflijk gespeeld vandaag. Echt — dit was een geweldige ronde. Je caddie is trots op je.";
+  else if(diff<0) caddieEind="Onder par — dat is iets om trots op te zijn. Elke birdie is verdiend geweest. Mooi werk.";
+  else if(diff===0) caddieEind="Level par op Capelle — dat is een uitstekende prestatie. Je hebt consistent gespeeld vandaag.";
+  else if(diff<=9) caddieEind="Goede ronde. Capelle is een uitdagende baan en jij hebt gevochten voor elke slag. Kom snel terug.";
+  else caddieEind="Het was niet je beste dag, maar je hebt 18 holes gespeeld op een geweldige baan. Dat telt. Volgende keer beter.";
+  document.getElementById("fin-caddie").innerHTML=caddieEind;
 }
 
 // ── ACTIES ────────────────────────────────────────────────────────────────────
-function setDoel(d,id){DOEL=d;renderDoelKnoppen(id);if(id==="inst-doel"){renderHole();renderKaart();}}
+function setStijl(s,id){STIJL=s;renderSetupStijl(id);if(id==="inst-stijl"){renderHole();}}
+function setDoel(d,id){DOEL=d;renderDoelKnoppen(id);if(id==="inst-doel"){renderHole();}}
 function setTee(t){TEE=t;renderTeeKnoppen();}
 function hcpAdj(d){HCP=Math.max(0,Math.min(54,+(HCP+d).toFixed(1)));document.getElementById("hcp-inp").value=HCP;document.getElementById("baanhcp").textContent=Math.round(HCP*(136/113));}
 function hcpSet(v){HCP=parseFloat(v)||0;document.getElementById("baanhcp").textContent=Math.round(HCP*(136/113));}
+function toggleFav(i){var idx=FAV.indexOf(i);if(idx>=0){FAV.splice(idx,1);}else if(FAV.length<4){FAV.push(i);}renderClubs();}
 function editClub(i){EDIT=i;renderClubs();}
 function cancelEdit(){EDIT=-1;renderClubs();}
 function saveClub(i){var v=parseInt(document.getElementById("ei").value);if(v>0)CLUBS[i].d=v;EDIT=-1;renderClubs();}
-function startRonde(){document.getElementById("pg-setup").classList.remove("on");document.getElementById("pg-app").classList.add("on");renderHole();renderWind();renderDoelKnoppen("inst-doel");}
-function resetRonde(){if(confirm("Nieuwe ronde starten? Scores worden gewist.")){SC=new Array(18).fill(0);ST=[];for(var i=0;i<18;i++)ST.push({fw:null,gir:null,pt:0});CUR=0;document.getElementById("pg-app").classList.remove("on");document.getElementById("pg-setup").classList.add("on");}}
-function sprong(i){CUR=i;renderHole();}
-function gaHole(d){CUR=Math.max(0,Math.min(17,CUR+d));renderHole();}
-function scoreAdj(d){if(d===-1&&SC[CUR]===0)return;SC[CUR]=Math.max(0,SC[CUR]+d);if(d===1&&SC[CUR]===0)SC[CUR]=1;renderHole();renderKaart();}
+function setupStap(n){SETUP_STAP=n;for(var i=1;i<=3;i++){var el=document.getElementById("step-"+i);if(el)el.className="screen"+(i===n?" on":"");}renderSetupSteps();}
+function startRonde(){document.getElementById("pg-setup").classList.remove("on");document.getElementById("pg-app").classList.add("on");renderHole();renderWind();renderDoelKnoppen("inst-doel");renderSetupStijl("inst-stijl");}
+function resetRonde(){if(confirm("Nieuwe ronde starten? Alle scores worden gewist.")){SC=new Array(18).fill(0);ST=[];for(var i=0;i<18;i++)ST.push({fw:null,gir:null,pt:0});CUR=0;SETUP_STAP=1;document.getElementById("pg-finish").classList.remove("on");document.getElementById("pg-app").classList.remove("on");document.getElementById("pg-setup").classList.add("on");setupStap(1);}}
+function sprong(i){CUR=i;ACTIEVE_SLAG=0;renderHole();}
+function gaHole(d){var nieuw=CUR+d;if(nieuw<0||nieuw>17)return;CUR=nieuw;ACTIEVE_SLAG=0;renderHole();if(nieuw===17&&d===1&&SC[17]>0){};}
+function scoreAdj(d){if(d===-1&&SC[CUR]===0)return;SC[CUR]=Math.max(0,SC[CUR]+d);if(d===1&&SC[CUR]===0)SC[CUR]=1;renderHole();renderKaart();if(CUR===17&&SC[17]>0&&scored()>=17){var allDone=true;for(var i=0;i<18;i++)if(!SC[i]){allDone=false;break;}if(allDone){setTimeout(function(){if(confirm("Alle 18 holes gespeeld! Ronde afsluiten?")){document.getElementById("pg-app").classList.remove("on");document.getElementById("pg-finish").classList.add("on");renderFinish();}},300);}}}
 function setFW(v){ST[CUR].fw=ST[CUR].fw===v?null:v;renderHole();}
 function setGIR(v){ST[CUR].gir=ST[CUR].gir===v?null:v;renderHole();}
 function puttsAdj(d){ST[CUR].pt=Math.max(0,(ST[CUR].pt||0)+d);renderHole();renderKaart();}
 function windSet(v){WS=+v;renderWind();renderHole();}
 function windDir(v){WD=v;renderWind();renderHole();}
+function setActieveSlag(i){ACTIEVE_SLAG=i;renderCaddie(H[CUR],wadj(tdist(H[CUR])));}
 function klap(bid,aid){var b=document.getElementById(bid),a=document.getElementById(aid);if(b.style.display==="none"){b.style.display="block";a.textContent="▲";}else{b.style.display="none";a.textContent="▼";}}
 
 function toonTab(naam,btn){
-  ["hole","wind","kaart","inst"].forEach(function(t){document.getElementById("tab-"+t).classList.remove("on");});
+  ["hole","caddie","kaart","wind","inst"].forEach(function(t){document.getElementById("tab-"+t).classList.remove("on");});
   document.getElementById("tab-"+naam).classList.add("on");
   document.querySelectorAll(".tab").forEach(function(b){b.classList.remove("on");});
   if(btn) btn.classList.add("on");
-  else {var idx=["hole","wind","kaart","inst"].indexOf(naam);var tabs=document.querySelectorAll(".tab");if(tabs[idx])tabs[idx].classList.add("on");}
-  if(naam==="kaart")renderKaart();
-  if(naam==="wind")renderWind();
-  if(naam==="inst")renderDoelKnoppen("inst-doel");
+  else{var idx=["hole","caddie","kaart","wind","inst"].indexOf(naam);var tabs=document.querySelectorAll(".tab");if(tabs[idx])tabs[idx].classList.add("on");}
+  if(naam==="kaart") renderKaart();
+  if(naam==="wind") renderWind();
+  if(naam==="inst"){renderDoelKnoppen("inst-doel");renderSetupStijl("inst-stijl");}
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-window.onload = function() {
-  renderDoelKnoppen("setup-doel");
-  renderTeeKnoppen();
+window.onload=function(){
+  renderSetupStijl("stijl-knoppen");
   renderClubs();
+  renderDoelKnoppen("doel-knoppen");
+  renderTeeKnoppen();
+  renderSetupSteps();
 };
 </script>
 </body>
