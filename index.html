@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Capelle Caddie</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#fff;max-width:430px;margin:0 auto;min-height:100vh}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+
+/* SCREENS */
+.pg{display:none;min-height:100vh;padding-bottom:80px}
+.pg.on{display:block}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(10,10,10,.97);border-top:1px solid #1a1a1a;display:flex;z-index:999;padding-bottom:env(safe-area-inset-bottom)}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px 8px;cursor:pointer}
+.bni-ic{font-size:22px;opacity:.3}
+.bni-lb{font-size:9px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.3px}
+.bni.on .bni-ic{opacity:1}
+.bni.on .bni-lb{color:#c8f020}
+
+/* HOME */
+.home-hero{height:100vh;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:0 20px 100px;background:linear-gradient(160deg,#0e2a06,#050f02)}
+.home-hero::before{content:'⛳';position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:80px;opacity:.15}
+.home-title{font-size:32px;font-weight:800;color:#fff;margin-bottom:4px}
+.home-sub{font-size:14px;color:rgba(255,255,255,.4);margin-bottom:32px}
+.btn-lime{width:100%;padding:16px;background:#c8f020;color:#0a0a0a;border-radius:14px;font-size:16px;font-weight:700;margin-bottom:10px}
+.btn-dark{width:100%;padding:15px;background:rgba(255,255,255,.08);color:#fff;border-radius:14px;font-size:15px;font-weight:600;border:1px solid rgba(255,255,255,.1);margin-bottom:24px}
+.last-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;display:flex;align-items:center;justify-content:space-between}
+.lc-info{}
+.lc-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.3);margin-bottom:4px}
+.lc-date{font-size:13px;color:rgba(255,255,255,.6)}
+.lc-score{font-size:38px;font-weight:900;color:#c8f020;line-height:1}
+
+/* HOLES LIST */
+.pg-header{padding:56px 20px 16px}
+.pg-title{font-size:24px;font-weight:800}
+.pg-sub{font-size:12px;color:rgba(255,255,255,.35);margin-top:3px}
+.hole-list{padding:0 14px}
+.hcard{display:flex;align-items:center;gap:12px;background:#111;border:1px solid #1a1a1a;border-radius:14px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:background .15s}
+.hcard:active{background:#1a1a1a}
+.hcard-img{width:58px;height:58px;border-radius:10px;object-fit:cover;flex-shrink:0;background:#1a2a0a}
+.hcard-num{font-size:20px;font-weight:800;color:#fff}
+.hcard-par{font-size:11px;color:#c8f020;font-weight:600;margin-top:1px}
+.hcard-dist{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px}
+.hcard-sc{display:inline-flex;width:26px;height:26px;border-radius:50%;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.hcard-arr{font-size:18px;color:rgba(255,255,255,.2);margin-left:4px}
+.hcard.cur{border-color:rgba(200,240,32,.3);background:rgba(200,240,32,.05)}
+
+/* HOLE DETAIL */
+.hd{background:#0a0a0a;min-height:100vh}
+.hd-map{position:relative;height:48vw;max-height:220px;overflow:hidden;background:#111}
+.hd-map img{width:100%;height:100%;object-fit:cover;object-position:top}
+.hd-map-grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.75) 0%,transparent 35%,rgba(10,10,10,1) 100%)}
+.hd-map-svg{position:absolute;inset:0;width:100%;height:100%}
+.hd-topbar{position:absolute;top:0;left:0;right:0;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
+.hd-back{width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer}
+.hd-center{text-align:center}
+.hd-hnum{font-size:12px;font-weight:800;color:#fff;letter-spacing:.5px}
+.hd-hpar{font-size:11px;color:#c8f020;font-weight:600}
+.hd-chips{position:absolute;top:46px;left:14px;right:14px;display:flex;align-items:center;gap:6px}
+.chip{font-size:9px;font-weight:600;padding:3px 8px;border-radius:10px;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);backdrop-filter:blur(4px)}
+.chip.wind{color:#ff9944;border-color:rgba(255,153,68,.3)}
+.chip.live{background:rgba(200,240,32,.12);border-color:rgba(200,240,32,.4);color:#c8f020;margin-left:auto;display:flex;align-items:center;gap:4px}
+.live-dot{width:5px;height:5px;border-radius:50%;background:#c8f020;animation:p 1.5s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Tabs */
+.hd-tabs{display:flex;border-bottom:1px solid #1a1a1a;padding:0 16px;background:#0a0a0a}
+.hd-tab{flex:1;padding:11px 4px;font-size:11px;font-weight:600;color:rgba(255,255,255,.3);text-align:center;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.hd-tab.on{color:#c8f020;border-bottom-color:#c8f020}
+
+/* Tab content */
+.tab-body{padding:14px 14px 20px}
+.tab-content{display:none}
+.tab-content.on{display:block}
+
+/* Dist block */
+.dist-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.dist-big{font-size:52px;font-weight:900;color:#fff;line-height:1;letter-spacing:-1px}
+.dist-m{font-size:16px;color:#c8f020;font-weight:700;margin-left:2px}
+.dist-sub{display:flex;gap:6px;margin-top:5px}
+.dchip{font-size:10px;font-weight:600;padding:3px 8px;border-radius:8px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.1)}
+.wind-info{text-align:right}
+.wind-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.3);margin-bottom:3px}
+.wind-val{font-size:13px;font-weight:700;color:#ff9944}
+.wind-plays{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px}
+.wind-plays b{color:rgba(255,255,255,.65)}
+
+/* Caddie */
+.caddie-box{background:#111;border:1px solid #1a1a1a;border-radius:14px;padding:13px;margin-bottom:12px;display:flex;gap:11px}
+.cav{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1a3a08,#0a2004);border:1.5px solid rgba(200,240,32,.25);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.clbl{font-size:8px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(200,240,32,.6);font-weight:700;margin-bottom:4px}
+.ctxt{font-size:12.5px;color:rgba(255,255,255,.82);line-height:1.6;font-style:italic}
+.ctxt b{color:#c8f020;font-style:normal;font-weight:700}
+.crec{margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.06)}
+.crec-lbl{font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.crec-val{font-size:13px;font-weight:700;color:#c8f020}
+
+/* Clubs */
+.sec-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.3);font-weight:600;margin-bottom:8px}
+.club-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);margin-bottom:5px;cursor:pointer;transition:all .15s}
+.club-item.sel{background:rgba(200,240,32,.08);border-color:rgba(200,240,32,.3)}
+.club-item:active{background:rgba(255,255,255,.08)}
+.ci-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0}
+.ci-name{font-size:13px;font-weight:600;color:#fff;flex:1}
+.ci-name.sel{color:#c8f020}
+.ci-dist{font-size:11px;color:rgba(255,255,255,.4)}
+.ci-check{width:18px;height:18px;border-radius:50%;background:#c8f020;display:flex;align-items:center;justify-content:center;font-size:10px;color:#000;font-weight:700;flex-shrink:0}
+
+/* LZ bar */
+.lz-bar{background:#111;border:1px solid rgba(200,240,32,.15);border-radius:12px;padding:11px 13px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.lz-ic{font-size:20px}
+.lz-info{flex:1}
+.lz-tit{font-size:9px;font-weight:700;color:#c8f020;text-transform:uppercase;letter-spacing:.8px}
+.lz-sub{font-size:10px;color:rgba(255,255,255,.4);margin-top:2px}
+.lz-nums{display:flex;gap:10px}
+.lz-n{text-align:right}
+.lz-nv{font-size:14px;font-weight:800;color:#fff}
+.lz-nl{font-size:7px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px}
+
+/* Score + nav */
+.sc-nav{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.hnbtn{padding:10px 14px;background:rgba(255,255,255,.07);border-radius:11px;font-size:12px;font-weight:600;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.08)}
+.hnbtn:active{background:rgba(255,255,255,.12)}
+.sc-cir{width:60px;height:60px;border-radius:50%;background:rgba(200,240,32,.1);border:2px solid rgba(200,240,32,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer}
+.sc-cir:active{background:rgba(200,240,32,.18)}
+.sc-n{font-size:22px;font-weight:900;color:#fff;line-height:1}
+.sc-l{font-size:7px;text-transform:uppercase;letter-spacing:.5px;color:rgba(200,240,32,.6);margin-top:1px}
+.sc-hint{font-size:8px;color:rgba(255,255,255,.2);text-align:center;margin-top:3px}
+
+/* Score invoer popup */
+.sc-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;align-items:flex-end;justify-content:center}
+.sc-popup.on{display:flex}
+.sc-sheet{background:#111;border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:430px}
+.sc-sheet-title{font-size:14px;font-weight:700;text-align:center;margin-bottom:16px;color:rgba(255,255,255,.6)}
+.sc-sheet-score{font-size:64px;font-weight:900;text-align:center;color:#fff;line-height:1;margin-bottom:4px}
+.sc-sheet-lbl{font-size:14px;font-weight:600;text-align:center;margin-bottom:20px}
+.sc-sheet-btns{display:flex;gap:12px;margin-bottom:12px}
+.sc-minus{flex:1;padding:18px;background:rgba(255,255,255,.08);border-radius:14px;font-size:28px;font-weight:700;color:#fff}
+.sc-plus{flex:1;padding:18px;background:rgba(200,240,32,.12);border-radius:14px;font-size:28px;font-weight:700;color:#c8f020;border:1px solid rgba(200,240,32,.3)}
+.sc-save{width:100%;padding:15px;background:#c8f020;color:#0a0a0a;border-radius:14px;font-size:15px;font-weight:700}
+.sc-stats-row{display:flex;gap:8px;margin-bottom:12px}
+.sc-stat-btn{flex:1;padding:8px;border-radius:10px;font-size:11px;font-weight:600;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.08)}
+.sc-stat-btn.on-hit{background:rgba(200,240,32,.1);color:#c8f020;border-color:rgba(200,240,32,.3)}
+.sc-stat-btn.on-miss{background:rgba(255,80,80,.1);color:#ff6060;border-color:rgba(255,80,80,.3)}
+
+/* Strategie */
+.strat-item{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.strat-item:last-child{border:none}
+.s-num{width:26px;height:26px;border-radius:50%;background:#1a2a08;border:1px solid rgba(200,240,32,.2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#c8f020;flex-shrink:0;margin-top:1px}
+.s-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);font-weight:600}
+.s-club{font-size:15px;font-weight:700;color:#fff;margin:2px 0}
+.s-tip{font-size:11px;color:rgba(255,255,255,.4);line-height:1.45}
+.s-dist{font-size:13px;font-weight:700;color:#c8f020}
+
+/* Hole info */
+.hi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.hi-box{background:#111;border:1px solid #1a1a1a;border-radius:10px;padding:10px 12px}
+.hi-lbl{font-size:8px;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:3px}
+.hi-val{font-size:13px;font-weight:700;color:#fff}
+
+/* Stats */
+.stat-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.stat-name{font-size:13px;color:rgba(255,255,255,.7)}
+.stat-btns{display:flex;gap:6px}
+.stbtn{padding:6px 12px;border-radius:8px;font-size:11px;font-weight:600;background:rgba(255,255,255,.06);color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.08);cursor:pointer}
+.stbtn.hit{background:rgba(200,240,32,.1);color:#c8f020;border-color:rgba(200,240,32,.3)}
+.stbtn.miss{background:rgba(255,80,80,.1);color:#ff6060;border-color:rgba(255,80,80,.3)}
+.putt-row{display:flex;align-items:center;gap:12px}
+.ptbtn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:18px;font-weight:700;border:1px solid rgba(255,255,255,.1);cursor:pointer}
+.ptval{font-size:20px;font-weight:700;color:#c8f020;min-width:28px;text-align:center}
+
+/* SCORECARD */
+.sc-totals{background:#111;border:1px solid #1a1a1a;border-radius:14px;padding:16px;margin:0 14px 14px;display:flex;justify-content:space-between;align-items:center}
+.sc-tot-score{font-size:54px;font-weight:900;color:#fff;line-height:1}
+.sc-tot-par{font-size:14px;font-weight:700;color:#c8f020;margin-top:3px}
+.sc-tot-stab{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px}
+.sc-tot-stats{text-align:right;display:flex;flex-direction:column;gap:6px}
+.sc-stat-mini-lbl{font-size:8px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.3)}
+.sc-stat-mini-val{font-size:15px;font-weight:700;color:#fff}
+.tbl-wrap{margin:0 14px;border-radius:12px;overflow:hidden;border:1px solid #1a1a1a}
+table{width:100%;border-collapse:collapse}
+th{background:#111;padding:7px 4px;font-size:8px;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);font-weight:600;text-align:center}
+td{padding:8px 4px;font-size:11.5px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;color:rgba(255,255,255,.7)}
+td:first-child{font-weight:700;color:#fff}
+tr.sub td{background:#0d0d0d;font-weight:700;color:#c8f020;cursor:default}
+tr.tot td{background:#1a2a08;font-weight:800;color:#fff;cursor:default}
+.sdot{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-weight:700;font-size:11px}
+
+/* PROFIEL */
+.prof-top{padding:56px 20px 20px;display:flex;align-items:center;gap:14px}
+.prof-av{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#1a3a08,#0a2004);border:2px solid rgba(200,240,32,.3);display:flex;align-items:center;justify-content:center;font-size:26px}
+.prof-name{font-size:19px;font-weight:800}
+.prof-hcp{font-size:12px;color:rgba(255,255,255,.4);margin-top:2px}
+.prof-sec{margin:0 14px 18px}
+.prof-sec-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.3);font-weight:600;margin-bottom:8px;padding:0 2px}
+.prof-item{display:flex;align-items:center;gap:12px;padding:13px 14px;background:#111;border:1px solid #1a1a1a;border-radius:12px;margin-bottom:6px;cursor:pointer}
+.pi-ic{font-size:16px;width:20px;text-align:center}
+.pi-nm{font-size:13px;font-weight:500;color:#fff;flex:1}
+.pi-val{font-size:12px;color:#c8f020;font-weight:600}
+.pi-arr{font-size:14px;color:rgba(255,255,255,.2)}
+.pi-danger .pi-nm{color:#ff5555}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="pg-home" class="pg on">
+  <div class="home-hero">
+    <div class="home-title">Welkom terug!</div>
+    <div class="home-sub">Klaar voor een top ronde?</div>
+    <button class="btn-lime" onclick="goTo('pg-holes')">⛳ Start nieuwe ronde</button>
+    <button class="btn-dark" onclick="goTo('pg-kaart')">📋 Rondes overzicht</button>
+    <div class="last-card">
+      <div>
+        <div class="lc-lbl">Laatste ronde</div>
+        <div class="lc-date">24 mei 2024</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">Par 72 · Capelle</div>
+      </div>
+      <div>
+        <div class="lc-lbl">Score</div>
+        <div class="lc-score">89</div>
+      </div>
+    </div>
+  </div>
+  <div class="bnav">
+    <div class="bni on" onclick="goTo('pg-home')"><div class="bni-ic">🏠</div><div class="bni-lb">Home</div></div>
+    <div class="bni" onclick="goTo('pg-holes')"><div class="bni-ic">⛳</div><div class="bni-lb">Baan</div></div>
+    <div class="bni" onclick="goTo('pg-kaart')"><div class="bni-ic">📊</div><div class="bni-lb">Statistieken</div></div>
+    <div class="bni" onclick="goTo('pg-profiel')"><div class="bni-ic">👤</div><div class="bni-lb">Profiel</div></div>
+  </div>
+</div>
+
+<!-- HOLES -->
+<div id="pg-holes" class="pg">
+  <div class="pg-header">
+    <div class="pg-title">Holes</div>
+    <div class="pg-sub">Capelle aan den IJssel</div>
+  </div>
+  <div class="hole-list" id="holes-list"></div>
+  <div class="bnav">
+    <div class="bni" onclick="goTo('pg-home')"><div class="bni-ic">🏠</div><div class="bni-lb">Home</div></div>
+    <div class="bni on" onclick="goTo('pg-holes')"><div class="bni-ic">⛳</div><div class="bni-lb">Baan</div></div>
+    <div class="bni" onclick="goTo('pg-kaart')"><div class="bni-ic">📊</div><div class="bni-lb">Statistieken</div></div>
+    <div class="bni" onclick="goTo('pg-profiel')"><div class="bni-ic">👤</div><div class="bni-lb">Profiel</div></div>
+  </div>
+</div>
+
+<!-- HOLE DETAIL -->
+<div id="pg-hole" class="pg" style="padding-bottom:20px">
+  <div class="hd">
+    <div class="hd-map">
+      <img id="hd-img" src="" alt="Hole" onerror="this.style.display='none'"/>
+      <div class="hd-map-grad"></div>
+      <svg class="hd-map-svg" viewBox="0 0 430 220" preserveAspectRatio="xMidYMid slice" id="hd-svg">
+        <defs>
+          <radialGradient id="lzg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c8f020" stop-opacity=".5"/>
+            <stop offset="60%" stop-color="#c8f020" stop-opacity=".15"/>
+            <stop offset="100%" stop-color="#c8f020" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <path id="sv-route" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2.5" stroke-dasharray="9,6"/>
+        <path id="sv-route-glow" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10" stroke-dasharray="9,6"/>
+        <circle id="sv-lz" r="32" fill="url(#lzg)"/>
+        <circle id="sv-lz-ring" r="20" fill="none" stroke="#c8f020" stroke-width="2" stroke-dasharray="5,3" opacity=".8">
+          <animate attributeName="r" values="18;22;18" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values=".8;.4;.8" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle id="sv-lz-dot" r="5" fill="#c8f020"/>
+        <g id="sv-dist-labels"></g>
+        <rect id="sv-tee" width="26" height="12" rx="3" fill="rgba(0,0,0,.8)" stroke="rgba(200,240,32,.5)" stroke-width="1.5"/>
+        <text id="sv-tee-txt" text-anchor="middle" font-size="6.5" fill="#c8f020" font-weight="700">TEE</text>
+        <g id="sv-knik" display="none">
+          <circle id="sv-knik-c" r="7" fill="rgba(255,200,50,.12)" stroke="#ffc832" stroke-width="1.5"/>
+          <circle id="sv-knik-d" r="3" fill="#ffc832"/>
+        </g>
+      </svg>
+      <div class="hd-topbar">
+        <div class="hd-back" onclick="goTo('pg-holes')">‹</div>
+        <div class="hd-center">
+          <div class="hd-hnum" id="hd-num">HOLE 1</div>
+          <div class="hd-hpar" id="hd-par">PAR 4</div>
+        </div>
+        <div style="width:32px"></div>
+      </div>
+      <div class="hd-chips">
+        <div class="chip" id="hd-si">SI 4</div>
+        <div class="chip wind" id="hd-wind">↗ NE 7.6m/s</div>
+        <div class="chip live"><div class="live-dot"></div>LIVE</div>
+      </div>
+    </div>
+    <!-- Tabs -->
+    <div class="hd-tabs">
+      <div class="hd-tab on" onclick="hdTab('o',this)">Overzicht</div>
+      <div class="hd-tab" onclick="hdTab('s',this)">Strategie</div>
+      <div class="hd-tab" onclick="hdTab('st',this)">Statistieken</div>
+    </div>
+    <div class="tab-body">
+      <!-- OVERZICHT -->
+      <div class="tab-content on" id="tc-o">
+        <div class="dist-row">
+          <div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.3);margin-bottom:3px">Afstand tot green</div>
+            <div><span class="dist-big" id="hd-dist">346</span><span class="dist-m">m</span></div>
+            <div class="dist-sub">
+              <div class="dchip" id="hd-par-chip">Par 4</div>
+              <div class="dchip" style="color:#ff9944;border-color:rgba(255,153,68,.2)" id="hd-plays-chip">Speelt als 362m</div>
+            </div>
+          </div>
+          <div class="wind-info">
+            <div class="wind-lbl">Wind</div>
+            <div class="wind-val" id="hd-wval">↗ NE 7.6m/s</div>
+            <div class="wind-plays">Speelt als <b id="hd-wplays">362m</b></div>
+          </div>
+        </div>
+        <div class="caddie-box">
+          <div class="cav">🏌️</div>
+          <div>
+            <div class="clbl">Jouw Caddie</div>
+            <div class="ctxt" id="hd-ctxt">"..."</div>
+            <div class="crec">
+              <div class="crec-lbl">Clubkeuze</div>
+              <div class="crec-val" id="hd-crec">—</div>
+            </div>
+          </div>
+        </div>
+        <div class="sec-lbl">🏌️ Kies club</div>
+        <div id="hd-clubs"></div>
+        <div class="lz-bar" style="margin-top:10px">
+          <div class="lz-ic">🎯</div>
+          <div class="lz-info">
+            <div class="lz-tit" id="lz-tit">Landing Zone</div>
+            <div class="lz-sub" id="lz-sub">—</div>
+          </div>
+          <div class="lz-nums">
+            <div class="lz-n"><div class="lz-nv" id="lz-carry">—</div><div class="lz-nl">Carry</div></div>
+            <div class="lz-n"><div class="lz-nv" id="lz-rest">—</div><div class="lz-nl">Rest</div></div>
+          </div>
+        </div>
+        <div class="sc-nav">
+          <button class="hnbtn" id="btn-prev" onclick="nav(-1)">‹ Vorige</button>
+          <div>
+            <div class="sc-cir" onclick="openScore()">
+              <div class="sc-n" id="hd-sc">—</div>
+              <div class="sc-l">Score</div>
+            </div>
+            <div class="sc-hint">Tik om in te voeren</div>
+          </div>
+          <button class="hnbtn" id="btn-next" onclick="nav(1)">Volgende ›</button>
+        </div>
+      </div>
+      <!-- STRATEGIE -->
+      <div class="tab-content" id="tc-s">
+        <div id="hd-strat"></div>
+        <div style="margin-top:14px">
+          <div class="sec-lbl">🏟 Hole informatie</div>
+          <div class="hi-grid" id="hd-hinfo"></div>
+        </div>
+      </div>
+      <!-- STATISTIEKEN -->
+      <div class="tab-content" id="tc-st">
+        <div id="hd-stats"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCOREKAART -->
+<div id="pg-kaart" class="pg">
+  <div class="pg-header">
+    <div class="pg-title">Ronde overzicht</div>
+    <div class="pg-sub">Capelle aan den IJssel</div>
+  </div>
+  <div class="sc-totals">
+    <div>
+      <div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.3);margin-bottom:4px">Totaal score</div>
+      <div class="sc-tot-score" id="tot-sc">—</div>
+      <div class="sc-tot-par" id="tot-par">—</div>
+      <div class="sc-tot-stab" id="tot-stab">0 stableford punten</div>
+    </div>
+    <div class="sc-tot-stats">
+      <div><div class="sc-stat-mini-lbl">Fairways</div><div class="sc-stat-mini-val" id="tot-fw">0/14</div></div>
+      <div><div class="sc-stat-mini-lbl">GIR</div><div class="sc-stat-mini-val" id="tot-gir">0/18</div></div>
+      <div><div class="sc-stat-mini-lbl">Putts</div><div class="sc-stat-mini-val" id="tot-putts">0</div></div>
+    </div>
+  </div>
+  <div class="tbl-wrap"><table id="sc-tbl"></table></div>
+  <div style="height:20px"></div>
+  <div class="bnav">
+    <div class="bni" onclick="goTo('pg-home')"><div class="bni-ic">🏠</div><div class="bni-lb">Home</div></div>
+    <div class="bni" onclick="goTo('pg-holes')"><div class="bni-ic">⛳</div><div class="bni-lb">Baan</div></div>
+    <div class="bni on" onclick="goTo('pg-kaart')"><div class="bni-ic">📊</div><div class="bni-lb">Statistieken</div></div>
+    <div class="bni" onclick="goTo('pg-profiel')"><div class="bni-ic">👤</div><div class="bni-lb">Profiel</div></div>
+  </div>
+</div>
+
+<!-- PROFIEL -->
+<div id="pg-profiel" class="pg">
+  <div class="prof-top">
+    <div class="prof-av">🏌️</div>
+    <div>
+      <div class="prof-name">Jouw Naam</div>
+      <div class="prof-hcp">Handicap 18.0</div>
+    </div>
+  </div>
+  <div class="prof-sec">
+    <div class="prof-sec-lbl">Algemeen</div>
+    <div class="prof-item"><div class="pi-ic">📊</div><div class="pi-nm">Handicap historie</div><div class="pi-arr">›</div></div>
+    <div class="prof-item"><div class="pi-ic">⛳</div><div class="pi-nm">Rondes</div><div class="pi-arr">›</div></div>
+    <div class="prof-item"><div class="pi-ic">📈</div><div class="pi-nm">Statistieken</div><div class="pi-arr">›</div></div>
+  </div>
+  <div class="prof-sec">
+    <div class="prof-sec-lbl">Instellingen</div>
+    <div class="prof-item"><div class="pi-ic">🎯</div><div class="pi-nm">Clubafstanden</div><div class="pi-val">11 clubs</div><div class="pi-arr">›</div></div>
+    <div class="prof-item"><div class="pi-ic">⭐</div><div class="pi-nm">Favoriete clubs</div><div class="pi-val">4 gekozen</div><div class="pi-arr">›</div></div>
+    <div class="prof-item"><div class="pi-ic">🏌️</div><div class="pi-nm">Speelstijl</div><div class="pi-val">Conservatief</div><div class="pi-arr">›</div></div>
+  </div>
+  <div class="prof-sec">
+    <div class="prof-sec-lbl">Over de baan</div>
+    <div class="prof-item"><div class="pi-ic">🏟</div><div class="pi-nm">Capelle aan den IJssel</div><div class="pi-arr">›</div></div>
+    <div class="prof-item pi-danger"><div class="pi-ic">🚪</div><div class="pi-nm">Uitloggen</div></div>
+  </div>
+  <div class="bnav">
+    <div class="bni" onclick="goTo('pg-home')"><div class="bni-ic">🏠</div><div class="bni-lb">Home</div></div>
+    <div class="bni" onclick="goTo('pg-holes')"><div class="bni-ic">⛳</div><div class="bni-lb">Baan</div></div>
+    <div class="bni" onclick="goTo('pg-kaart')"><div class="bni-ic">📊</div><div class="bni-lb">Statistieken</div></div>
+    <div class="bni on" onclick="goTo('pg-profiel')"><div class="bni-ic">👤</div><div class="bni-lb">Profiel</div></div>
+  </div>
+</div>
+
+<!-- SCORE POPUP -->
+<div class="sc-popup" id="sc-popup">
+  <div class="sc-sheet">
+    <div class="sc-sheet-title" id="scp-title">Score invoeren · Hole 1</div>
+    <div class="sc-sheet-score" id="scp-score">—</div>
+    <div class="sc-sheet-lbl" id="scp-lbl" style="color:#888"></div>
+    <div class="sc-sheet-btns">
+      <button class="sc-minus" onclick="scAdj(-1)">−</button>
+      <button class="sc-plus" onclick="scAdj(1)">+</button>
+    </div>
+    <div style="font-size:10px;color:rgba(255,255,255,.3);text-align:center;margin-bottom:12px">Tik op − of + om de score aan te passen</div>
+    <div id="scp-stats"></div>
+    <button class="sc-save" onclick="closeScore()">Opslaan ✓</button>
+  </div>
+</div>
+
+<script>
+var BASE = 'https://raw.githubusercontent.com/mikeh5-creator/Capelle-caddy/main/';
+
+var HOLES = [
+  {n:1,p:4,si:4,g:346,o:256,r:121,img:'H1.jpg',knik:false,
+   caddie:'Rustig beginnen. Neem je <b>3-hout</b>, speel links van het midden — de fairway versmalt na 220m. Van daar heb je een comfortabele inslag.',
+   rec:'3-hout of 5-hout',
+   strat:[{l:'Drive',c:'3-hout',d:205,r:141,t:'Links van midden · voor de versmalling'},{l:'Inslag',c:'7-ijzer',d:132,r:9,t:'Midden green aanspelen'},{l:'Putt',c:'Putter',d:0,r:0,t:'2 putten voor par/bogey'}],
+   info:{type:'Parkland',fw:'Breed 36m · Smal 18m',green:'32m',h:'-2m'},
+   lzx:215,lzy:120,teeX:215,teeY:195,rx:'M 215,195 Q 215,155 215,120 Q 215,75 215,30'},
+  {n:2,p:4,si:2,g:366,o:276,r:333,img:'H2.jpg',knik:true,
+   caddie:'Moeilijkste par 4 van de voorkant. OB rondom de green — we spelen geen held. <b>5-hout rechts</b>, bal in het spel. Een bogey hier is een prima score.',
+   rec:'5-hout of hybride',
+   strat:[{l:'Drive',c:'5-hout',d:195,r:171,t:'Rechterkant fairway · voorbij het water'},{l:'Inslag',c:'7-ijzer',d:132,r:39,t:'Midden green · OB vermijden'},{l:'Putt',c:'Putter',d:0,r:0,t:'2 putten voor bogey'}],
+   info:{type:'Parkland',fw:'Smal 16m · Breed 28m',green:'31m',h:'+1m'},
+   lzx:220,lzy:130,teeX:215,teeY:200,rx:'M 215,200 Q 216,160 218,130 Q 220,90 222,30',knikX:218,knikY:130},
+  {n:3,p:3,si:14,g:160,o:119,r:200,img:'H3.jpg',knik:false,
+   caddie:'Eerlijke maar lastige par 3. <b>Water rechts dwingt precisie</b> — speel op het midden van de green. Links missen is veiliger.',
+   rec:'9-ijzer',
+   strat:[{l:'Tee shot',c:'9-ijzer',d:107,r:0,t:'Midden-links green · weg van water'},{l:'Putt',c:'Putter',d:0,r:0,t:'2 putten voor par'}],
+   info:{type:'Parkland',fw:'Gemiddeld 24m',green:'30m',h:'+1m'},
+   lzx:215,lzy:40,teeX:215,teeY:195,rx:'M 215,195 Q 215,130 215,80 Q 215,55 215,40'},
+  {n:4,p:5,si:16,g:456,o:348,r:214,img:'H4.jpg',knik:false,
+   caddie:'Lange par 5 — geen stress. <b>Stop vóór het water</b> met je 4-ijzer, links van de boom. Dan heb je een open tweede slag. Rechts is hier altijd fout.',
+   rec:'4-ijzer',
+   strat:[{l:'Drive',c:'4-ijzer',d:185,r:271,t:'Links van boom op 185m · weg van water'},{l:'2e slag',c:'3-hout',d:205,r:66,t:'Richting green · rechts vermijden'},{l:'Inslag',c:'SW',d:66,r:0,t:'Midden green aanspelen'},{l:'Putt',c:'Putter',d:0,r:0,t:'2 putten voor bogey'}],
+   info:{type:'Parkland',fw:'Gemiddeld 28m',green:'32m',h:'+3m'},
+   lzx:215,lzy:140,teeX:215,teeY:205,rx:'M 215,205 Q 215,170 215,140 Q 215,90 215,30'}
+];
+
+var CLUBS = [
+  {n:'Driver',d:230},{n:'3-hout',d:205},{n:'5-hout',d:185},
+  {n:'4-ijzer',d:170},{n:'5-ijzer',d:158},{n:'6-ijzer',d:145},
+  {n:'7-ijzer',d:132},{n:'8-ijzer',d:120},{n:'9-ijzer',d:107},
+  {n:'PW',d:93},{n:'SW',d:75}
+];
+
+var CUR=0, HCP=18, WS=7.6, WD=45;
+var SCORES=new Array(18).fill(0);
+var STATS=[];
+for(var i=0;i<18;i++) STATS.push({fw:null,gir:null,pt:0});
+var SEL=-1;
+
+function tdist(h){return h.g;}
+function wadj(d){return Math.round(d*(1+Math.cos(WD*Math.PI/180)*WS*0.01));}
+function bestClub(d){if(!d)return null;return CLUBS.reduce(function(b,c){return Math.abs(c.d-d)<Math.abs(b.d-d)?c:b;});}
+function stabP(i){var s=SCORES[i];if(!s)return null;var h=HOLES[i]||{p:4,si:i+1};var sh=Math.floor(HCP/18)+(h.si<=(HCP%18)?1:0);var d=s-sh-h.p;return d<=-2?4:d===-1?3:d===0?2:d===1?1:0;}
+function stabTot(){var t=0;for(var i=0;i<18;i++){var p=stabP(i);if(p!==null)t+=p;}return t;}
+function scBg(s,p){if(!s)return'#333';var d=s-p;return d<=-2?'#f0c330':d===-1?'#c8f020':d===0?'#4a9adf':d===1?'#f7a35c':'#e05252';}
+function scLbl(s,p){if(!s)return'';var d=s-p;return d<=-2?'Eagle 🦅':d===-1?'Birdie 🐦':d===0?'Par ✓':d===1?'Bogey':d===2?'Dubbel':'+'+d;}
+function runDiff(){var d=0;for(var i=0;i<18;i++)if(SCORES[i]>0)d+=SCORES[i]-((HOLES[i]||{p:4}).p);return d;}
+function scored(){return SCORES.filter(function(s){return s>0;}).length;}
+
+// Navigation
+function goTo(id) {
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+  document.getElementById(id).classList.add('on');
+  if(id==='pg-holes') renderHolesList();
+  if(id==='pg-kaart') renderScorecard();
+  window.scrollTo(0,0);
+}
+
+// Holes list
+function renderHolesList() {
+  var html='';
+  HOLES.forEach(function(h,i){
+    var sc=SCORES[i];
+    var cur=i===CUR?' cur':'';
+    html+='<div class="hcard'+cur+'" onclick="openHole('+i+')">';
+    html+='<img class="hcard-img" src="'+BASE+h.img+'" onerror="this.style.background=\'#1a3a08\'" alt="H'+(i+1)+'">';
+    html+='<div style="flex:1"><div class="hcard-num">'+(i+1)+'</div><div class="hcard-par">Par '+h.p+'</div><div class="hcard-dist">'+tdist(h)+'m · SI '+h.si+'</div></div>';
+    if(sc>0){var bg=scBg(sc,h.p);html+='<span class="hcard-sc" style="background:'+bg+';color:'+(sc-h.p<=-1?'#000':'#fff')+'">'+sc+'</span>';}
+    html+='<span class="hcard-arr">›</span></div>';
+  });
+  // Placeholder holes 5-18
+  for(var j=4;j<18;j++){
+    html+='<div class="hcard" style="opacity:.35" onclick="alert(\'Hole '+(j+1)+' komt binnenkort!\')"><div class="hcard-img" style="display:flex;align-items:center;justify-content:center;font-size:22px">⛳</div><div style="flex:1"><div class="hcard-num">'+(j+1)+'</div><div class="hcard-par">Par —</div><div class="hcard-dist">Binnenkort</div></div><span class="hcard-arr">›</span></div>';
+  }
+  document.getElementById('holes-list').innerHTML=html;
+}
+
+function openHole(i){
+  CUR=i;
+  SEL=-1;
+  goTo('pg-hole');
+  renderHole();
+}
+
+// Hole detail
+function renderHole(){
+  var h=HOLES[CUR];
+  if(!h)return;
+  var dist=tdist(h);
+  var adj=wadj(dist);
+  var bc=SEL>=0?CLUBS[SEL]:bestClub(adj);
+
+  // Image
+  document.getElementById('hd-img').src=BASE+h.img;
+
+  // Header
+  document.getElementById('hd-num').textContent='HOLE '+h.n;
+  document.getElementById('hd-par').textContent='PAR '+h.p;
+  document.getElementById('hd-si').textContent='SI '+h.si;
+  document.getElementById('hd-wind').textContent='↗ NE '+WS+'m/s';
+
+  // Dist
+  document.getElementById('hd-dist').textContent=dist;
+  document.getElementById('hd-par-chip').textContent='Par '+h.p;
+  document.getElementById('hd-plays-chip').textContent='Speelt als '+adj+'m';
+  document.getElementById('hd-wval').textContent='↗ NE '+WS+'m/s';
+  document.getElementById('hd-wplays').textContent=adj+'m';
+
+  // Caddie
+  document.getElementById('hd-ctxt').innerHTML='"'+h.caddie+'"';
+  document.getElementById('hd-crec').textContent=h.rec;
+
+  // Clubs
+  var cHtml='';
+  CLUBS.forEach(function(c,i){
+    var isBest=bc&&c.n===bc.n&&SEL<0?true:SEL===i;
+    cHtml+='<div class="club-item'+(isBest?' sel':'')+'" onclick="selClub('+i+')">';
+    cHtml+='<span class="ci-icon">🏌️</span>';
+    cHtml+='<span class="ci-name'+(isBest?' sel':'')+'">'+c.n+'</span>';
+    cHtml+='<span class="ci-dist">'+c.d+'m</span>';
+    if(isBest) cHtml+='<span class="ci-check">✓</span>';
+    cHtml+='</div>';
+  });
+  document.getElementById('hd-clubs').innerHTML=cHtml;
+
+  // LZ
+  if(bc){
+    document.getElementById('lz-tit').textContent='Landing Zone · '+bc.n;
+    document.getElementById('lz-sub').textContent='Carry '+bc.d+'m';
+    document.getElementById('lz-carry').textContent=bc.d+'m';
+    document.getElementById('lz-rest').textContent=Math.max(0,dist-bc.d)+'m';
+  }
+
+  // Score
+  var sc=SCORES[CUR];
+  document.getElementById('hd-sc').textContent=sc||'—';
+
+  // Nav
+  document.getElementById('btn-prev').style.opacity=CUR===0?'.3':'1';
+  document.getElementById('btn-next').style.opacity=CUR>=HOLES.length-1?'.3':'1';
+
+  // SVG
+  renderSVG(h,adj,bc);
+
+  // Strategie
+  renderStrat(h,dist);
+
+  // Stats
+  renderStats();
+}
+
+function renderSVG(h,adj,bc){
+  document.getElementById('sv-route').setAttribute('d',h.rx);
+  document.getElementById('sv-route-glow').setAttribute('d',h.rx);
+  document.getElementById('sv-lz').setAttribute('cx',h.lzx);
+  document.getElementById('sv-lz').setAttribute('cy',h.lzy);
+  document.getElementById('sv-lz-ring').setAttribute('cx',h.lzx);
+  document.getElementById('sv-lz-ring').setAttribute('cy',h.lzy);
+  document.getElementById('sv-lz-dot').setAttribute('cx',h.lzx);
+  document.getElementById('sv-lz-dot').setAttribute('cy',h.lzy);
+  document.getElementById('sv-tee').setAttribute('x',h.teeX-13);
+  document.getElementById('sv-tee').setAttribute('y',h.teeY-6);
+  document.getElementById('sv-tee-txt').setAttribute('x',h.teeX);
+  document.getElementById('sv-tee-txt').setAttribute('y',h.teeY+2);
+  if(h.knik){
+    document.getElementById('sv-knik').setAttribute('display','block');
+    document.getElementById('sv-knik-c').setAttribute('cx',h.knikX);
+    document.getElementById('sv-knik-c').setAttribute('cy',h.knikY);
+    document.getElementById('sv-knik-d').setAttribute('cx',h.knikX);
+    document.getElementById('sv-knik-d').setAttribute('cy',h.knikY);
+  } else {
+    document.getElementById('sv-knik').setAttribute('display','none');
+  }
+  // Dist labels
+  var dist=tdist(h);
+  var labels='';
+  [150,100,50].forEach(function(m){
+    if(m<dist){
+      var frac=m/dist;
+      var y=h.lzy+(h.teeY-h.lzy)*frac;
+      labels+='<circle cx="215" cy="'+y+'" r="3" fill="#e8d080" opacity=".8"/>';
+      labels+='<rect x="220" y="'+(y-8)+'" width="46" height="16" rx="6" fill="rgba(0,0,0,.78)"/>';
+      labels+='<text x="243" y="'+(y+4)+'" text-anchor="middle" font-size="9" fill="#e8d080" font-weight="700" font-family="-apple-system,sans-serif">'+m+'m</text>';
+    }
+  });
+  document.getElementById('sv-dist-labels').innerHTML=labels;
+}
+
+function renderStrat(h,dist){
+  var html='';
+  h.strat.forEach(function(s,i){
+    html+='<div class="strat-item">';
+    html+='<div class="s-num">'+(i+1)+'</div>';
+    html+='<div style="flex:1"><div class="s-lbl">'+s.l+'</div>';
+    html+='<div style="display:flex;align-items:center;justify-content:space-between">';
+    html+='<div class="s-club">'+s.c+'</div>';
+    if(s.d>0) html+='<div class="s-dist">'+s.d+'m</div>';
+    html+='</div>';
+    html+='<div class="s-tip">📍 '+s.t+'</div></div></div>';
+  });
+  document.getElementById('hd-strat').innerHTML=html;
+  var st=h.info;
+  document.getElementById('hd-hinfo').innerHTML=
+    '<div class="hi-box"><div class="hi-lbl">Baantype</div><div class="hi-val">'+st.type+'</div></div>'+
+    '<div class="hi-box"><div class="hi-lbl">Fairway</div><div class="hi-val">'+st.fw+'</div></div>'+
+    '<div class="hi-box"><div class="hi-lbl">Green diepte</div><div class="hi-val">'+st.green+'</div></div>'+
+    '<div class="hi-box"><div class="hi-lbl">Hoogte</div><div class="hi-val">'+st.h+'</div></div>';
+}
+
+function renderStats(){
+  var fw=STATS[CUR].fw,gir=STATS[CUR].gir,pt=STATS[CUR].pt||0;
+  var h=HOLES[CUR];
+  var html='';
+  if(h&&h.p>3){
+    html+='<div class="stat-row"><div class="stat-name">Fairway geraakt</div><div class="stat-btns">';
+    html+='<button class="stbtn'+(fw==='hit'?' hit':'')+'" onclick="setFW(\'hit\')">✅ Ja</button>';
+    html+='<button class="stbtn'+(fw==='miss'?' miss':'')+'" onclick="setFW(\'miss\')">❌ Nee</button>';
+    html+='</div></div>';
+  }
+  html+='<div class="stat-row"><div class="stat-name">Green geraakt (GIR)</div><div class="stat-btns">';
+  html+='<button class="stbtn'+(gir===true?' hit':'')+'" onclick="setGIR(true)">✅ Ja</button>';
+  html+='<button class="stbtn'+(gir===false?' miss':'')+'" onclick="setGIR(false)">❌ Nee</button>';
+  html+='</div></div>';
+  html+='<div class="stat-row"><div class="stat-name">Putts</div>';
+  html+='<div class="putt-row"><button class="ptbtn" onclick="adjPt(-1)">−</button>';
+  html+='<span class="ptval">'+pt+'</span>';
+  html+='<button class="ptbtn" onclick="adjPt(1)">+</button></div></div>';
+  document.getElementById('hd-stats').innerHTML=html;
+}
+
+function selClub(i){
+  SEL=i;
+  renderHole();
+}
+
+function hdTab(t,btn){
+  ['o','s','st'].forEach(function(x){document.getElementById('tc-'+x).classList.remove('on');});
+  document.getElementById('tc-'+t).classList.add('on');
+  document.querySelectorAll('.hd-tab').forEach(function(b){b.classList.remove('on');});
+  if(btn)btn.classList.add('on');
+}
+
+function nav(d){
+  var next=CUR+d;
+  if(next<0||next>=HOLES.length)return;
+  CUR=next;SEL=-1;
+  renderHole();
+  window.scrollTo(0,0);
+}
+
+// Score popup
+function openScore(){
+  document.getElementById('sc-popup').classList.add('on');
+  updateScorePopup();
+}
+
+function updateScorePopup(){
+  var h=HOLES[CUR];
+  var sc=SCORES[CUR];
+  document.getElementById('scp-title').textContent='Score invoeren · Hole '+(CUR+1);
+  document.getElementById('scp-score').textContent=sc||'—';
+  if(sc&&h){
+    var lbl=scLbl(sc,h.p);
+    var col=scBg(sc,h.p);
+    document.getElementById('scp-lbl').textContent=lbl;
+    document.getElementById('scp-lbl').style.color=col;
+    document.getElementById('scp-score').style.color=col;
+  } else {
+    document.getElementById('scp-lbl').textContent='Tik + om score in te voeren';
+    document.getElementById('scp-lbl').style.color='rgba(255,255,255,.35)';
+    document.getElementById('scp-score').style.color='#fff';
+  }
+}
+
+function scAdj(d){
+  var h=HOLES[CUR];
+  if(!h)return;
+  if(d===-1&&SCORES[CUR]<=1){SCORES[CUR]=0;}
+  else if(d===1&&SCORES[CUR]===0){SCORES[CUR]=1;}
+  else{SCORES[CUR]=Math.max(0,SCORES[CUR]+d);}
+  updateScorePopup();
+  document.getElementById('hd-sc').textContent=SCORES[CUR]||'—';
+  renderScorecard();
+}
+
+function closeScore(){
+  document.getElementById('sc-popup').classList.remove('on');
+  renderHole();
+}
+
+function setFW(v){STATS[CUR].fw=STATS[CUR].fw===v?null:v;renderStats();}
+function setGIR(v){STATS[CUR].gir=STATS[CUR].gir===v?null:v;renderStats();}
+function adjPt(d){STATS[CUR].pt=Math.max(0,(STATS[CUR].pt||0)+d);renderStats();}
+
+// Scorecard
+function renderScorecard(){
+  var bruto=SCORES.reduce(function(a,b){return a+b;},0);
+  var diff=runDiff(),stab=stabTot();
+  var putts=STATS.reduce(function(a,s){return a+(s.pt||0);},0);
+  var sc2=scored();
+  var fw=STATS.filter(function(s){return s.fw==='hit';}).length;
+  var gir=STATS.filter(function(s){return s.gir===true;}).length;
+
+  document.getElementById('tot-sc').textContent=bruto||'—';
+  var dp=document.getElementById('tot-par');
+  dp.textContent=sc2===0?'—':diff===0?'Level par':diff>0?'+'+diff+' boven par':diff+' onder par';
+  dp.style.color=diff<0?'#c8f020':diff>0?'#f7a35c':'#4a9adf';
+  document.getElementById('tot-stab').textContent=stab+' stableford punten';
+  document.getElementById('tot-fw').textContent=fw+'/14';
+  document.getElementById('tot-gir').textContent=gir+'/18';
+  document.getElementById('tot-putts').textContent=putts;
+
+  var allH=[];
+  for(var i=0;i<18;i++) allH.push(HOLES[i]||{n:i+1,p:4,si:i+1,g:300});
+  var html='<thead><tr><th>H</th><th>Par</th><th>Score</th><th>+/-</th><th>Stbfd</th></tr></thead><tbody>';
+  [0,1].forEach(function(half){
+    var ps=0,bs=0,ss=0;
+    allH.slice(half*9,(half+1)*9).forEach(function(h,j){
+      var idx=half*9+j,sc=SCORES[idx],sp=stabP(idx),d=sc?sc-h.p:null;
+      ps+=h.p;bs+=sc;if(sp!==null)ss+=sp;
+      var dot=sc?'<span class="sdot" style="background:'+scBg(sc,h.p)+';color:'+(sc-h.p<=-1?'#000':'#fff')+'">'+sc+'</span>':"—";
+      var ds=sc?(d===0?'E':d>0?'+'+d:d):'';
+      html+='<tr onclick="openHole('+idx+')"><td>'+h.n+'</td><td>'+h.p+'</td><td>'+dot+'</td><td style="color:'+(sc?scBg(sc,h.p):'#555')+'">'+ds+'</td><td style="color:#c8f020">'+(sp!==null?sp:'—')+'</td></tr>';
+    });
+    var hd=bs-(half===0?35:34);
+    html+='<tr class="sub"><td colspan="2">'+(half===0?'OUT':'IN')+'</td><td>'+(bs||'—')+'</td><td>'+(bs?(hd===0?'E':hd>0?'+'+hd:hd):'')+'</td><td>'+ss+'</td></tr>';
+  });
+  var td=runDiff();
+  html+='<tr class="tot"><td colspan="2">TOT</td><td style="color:#c8f020">'+(bruto||'—')+'</td><td>'+(sc2?(td===0?'E':td>0?'+'+td:td):'')+'</td><td>'+stab+'</td></tr></tbody>';
+  document.getElementById('sc-tbl').innerHTML=html;
+}
+
+window.onload=function(){
+  renderHolesList();
+  renderScorecard();
+};
+</script>
+</body>
+</html>
